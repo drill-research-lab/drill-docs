@@ -78,9 +78,44 @@
 - **Review**：初稿 → review mode 送審
 - **Knowledge base**：citation lookup（Zotero / 知識庫）
 
+## 🥇 第一個垂直切片：國科會 AI Slop 報告產生器
+
+> **定位**：不是獨立專案——是 paper mode 的 **template + skills** 組合，也是 Drill 第一個實際交付給老紀（教授）的功能。
+
+### 為什麼是這個
+
+- 老紀要的第一個具體東西（Discord 討論 2026-08-12：「先開一個 Loop 做老紀想要的國科會 AI slop 報告產生器」）
+- 它驗證的其實是 **paper mode 本身**：template 系統 + writer agent + citation + LaTeX compile
+- 做完國科會報告產生器 = paper mode 的核心已可運作，其他模板（NeurIPS/ICML）只是換 template
+
+### 組成
+
+| 元件 | 內容 |
+|---|---|
+| **template** | 國科會計畫書 LaTeX 模板（章節結構：摘要/背景/方法/預期成果/經費…）|
+| **skill** | `nstc-proposal` skill——教 writer 怎麼寫國科會風格（格式、口吻、份量）|
+| **writer agent** | 用上面 template + skill 產出草稿 |
+| **librarian** | 抓相關文獻/引用 |
+| **reviewer** | 驗證引用真實性 + 內容品質 |
+| **compile** | LaTeX → PDF（tectonic/latexmk in Docker）|
+
+### 驗證範圍（完成 = paper mode 核心可用）
+
+- [ ] template 系統（任意 LaTeX 模板可載入）
+- [ ] writer agent + skill 協作
+- [ ] citation 從知識庫插入
+- [ ] LaTeX compile → PDF preview
+- [ ] 國科會格式的實際產出可交付
+
+### 開放問題
+
+1. 國科會計畫書有官方 LaTeX 模板嗎？還是自建？（可問老紀/阿柏）
+2. 要不要先從「單人寫作 + markdown → pandoc」最快路徑開始，LaTeX 後補？
+3. skill 是預先寫好的 `nstc-proposal`，還是讓 agent 從範例文件學習？
+
 ## 開放問題
 
 1. v1 用 markdown-only 還是 md + latex 並行？
-2. 國科會計畫（NSTC proposal）模板要內建嗎？（manpage 沒提但 disscuss 有）
+2. ✅ 已解決：國科會模板 = 第一個垂直切片（見上方）
 3. 協同編輯（多人同時寫）是 v1 需求嗎？
 4. 引用格式：BibTeX 為主還是支援 CSL（Citation Style Language）？
