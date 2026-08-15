@@ -32,8 +32,9 @@
 - 延遲、rate limit 狀態
 - 網路白名單狀態（sandbox 的 egress 控制）
 
-### 5. Storage
-- 各層用量：
+### 5. Storage（D3：user workspace + 用量監控）
+- **per-user workspace 用量**（D3 定義的 storage 主語意）：每個 user 的 workspace 目錄、配額使用、超額警告
+- 基礎設施層用量：
   - Postgres（metadata / sessions / projects）
   - 向量 DB（embeddings）
   - Blob（papers / PDFs / artifacts）

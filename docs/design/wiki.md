@@ -72,13 +72,13 @@
 ## 整合點
 
 - **Storage**：blob（原始檔）+ vector DB + Postgres（metadata）
-- **Session**：知識庫 per-project，跨 session 持久
+- **Session**：知識庫 per-user、可多本（notebook 模型），可掛到 project/workspace 使用；跨 session 持久
 - **Memory**：librarian 的整理結果進長期記憶
 - **其他 agent**：researcher / writer 查知識庫 → `kb_search` tool
 
 ## 開放問題
 
 1. **RAG 還是 llm-wiki 式組織？**（或兩者都做：RAG 檢索 + wiki 組織）
-2. 多使用者共用知識庫？還是 per-user 隔離？
+2. ✅ 已解決（2026-08-16）：**一人多本 wiki/notebook**（Gemini Notebook 模型）；多人共用之後思考（Gemini Notebook 2026 更新已加共用功能，可參考其語意）
 3. OCR 是否 v1 就要（掃描 PDF）？
 4. 文件版本管理：更新文件後，相關 wiki 頁面要自動重寫嗎？

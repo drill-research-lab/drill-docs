@@ -97,7 +97,15 @@ Agent 定義（`OmoAgentDefSchema`）：
 
 - **MemoryProvider ABC**（`agent/memory_provider.py`）：`name` / `is_available` / `initialize(session_id)` / `system_prompt_block` / `prefetch` / `sync_turn` / `get_tool_schemas` / `handle_tool_call` / `shutdown`
 - **內建 providers**（`plugins/memory/`）：Honcho / OpenViking / Hindsight（knowledge graph）/ Mem0 / RetainDB / ByteRover / SuperMemory / Holographic；一次只能啟用一個 external provider
-- **Skill 自動演化**（`_SKILL_REVIEW_PROMPT`）：user corrections / non-trivial techniques / outdated skills 觸發；SKILL.md + references/ + templates/ + scripts/；protected skills（bundled / hub-installed / pinned）不可自動改
+- **Skill 系統**（DeepWiki 實證 2026-08-16，兩輪查詢）：
+  - **結構**：`~/.hermes/skills/<name>/` — `SKILL.md`（YAML frontmatter：`name`/`description` 必填，`platforms`/`prerequisites`/`version`/`license`/`metadata` 選填）+ `references/` / `templates/` / `scripts/` / `assets/` 子目錄；安裝後自動成為 slash command
+  - **Progressive disclosure 三層**：L0 `skills_list()`（輕量 index，全庫約 ~3k tokens）→ L1 `skill_view(name)`（載入全文）→ L2 `skill_view(name, path)`（references/ 等支援檔按需載入）
+  - **`skill_manage` tool**：`create` / `edit`（全文替換）/ `patch`（find-replace，含支援檔）/ `delete` / `write_file` / `remove_file`；操作後清 skills prompt cache、更新 usage telemetry、debounced sync push
+  - **自動演化**：前景 agent 用 `skill_manage` 自我改善；背景 review agent 由 `_SKILL_REVIEW_PROMPT` 驅動。觸發：user corrections / non-trivial techniques（fix、workaround、debugging path、tool-usage pattern）/ outdated skills。優先序：改已載入 skill → 改 umbrella skill → 建 class-level skill
+  - **寫入審批**：`skills.write_approval`（預設 `false` 自由寫）；`true` 時所有寫入 staged 到 `~/.hermes/pending/skills/`，`/skills pending|diff|approve|reject|approval on|off` 審批
+  - **Protected skills**（不可被自演化改）：bundled / hub-installed / `external_dirs` / pinned / user-owned
+  - **Curator（背景維護）**：閒置觸發（距上次 ≥ `interval_hours` 7 天 + agent 閒置 ≥ 2 小時才 fork 背景 `AIAgent`），非 cron。只管 agent-created skills（`.usage.json` 標記）。動作：30 天未用標 stale、90 天未用 archive（移到 `.archive/`，可恢復，是其**最大**破壞性動作、不自動刪）、LLM consolidation（預設關，`curator.consolidate: true` 開）把重複 skill 合併成 umbrella。每次 pass 前 tar.gz 快照可 rollback。指令：`pin` / `unpin` / `adopt` / `restore` / `archive` / `prune` / `backup` / `rollback` / `pause` / `resume` / `status` / `run --dry-run`
+  - **三重 guard**：`_pinned_guard`（pinned 不可 delete，但可 patch/edit）；`_background_review_write_guard`（背景寫入比前景嚴——沒有 user 在場同意）；`_curator_consolidation_delete_guard`（consolidation 的 delete 只允許「內容已被 umbrella 吸收」）
 - **Honcho 整合**：tool `honcho_profile` / `honcho_search` / `honcho_context` / `honcho_reasoning` / `honcho_conclude`；`<memory-context>` fenced injection
 
 ---

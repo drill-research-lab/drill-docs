@@ -78,7 +78,7 @@ LLM 寫 code → 用戶在右側檢視 → 框選片段 → suggest fix → LLM 
 
 ## 開放問題
 
-1. **共編模式**：agent 直接寫檔案 + 用戶看，還是 agent 提案 + 用戶 accept？（manpage 看起來偏後者）
+1. **共編模式（傾向，未定案）**：agent **直接寫入** + **回溯機制**（像 OpenCode 的 checkpoint/undo——寫了可回滾），用戶右側查看 + 框選 suggest fix
 2. 沙盒 v1 就做還是 lab mode 延後？（之前討論傾向延後）
 3. 實驗結果的 reproducibility：要記錄完整環境（container image / seed / params）嗎？
 4. researcher 和 pipeline 的 code 節點關係？（同一執行引擎？）

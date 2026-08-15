@@ -104,7 +104,7 @@ reviewer 收到 [claim + sources]
 
 ## 開放問題
 
-1. **reviewer 的 model**：要用不同 model 嗎？（獨立性更強；例如主 agent 用 DeepSeek，reviewer 用外部 model）
+1. ✅ 已解決（2026-08-16）：reviewer model **可設定**——預設同主力 model，setting 頁可 override（獨立性主要來自 clean-context；換 model 是加強選項）
 2. fast/slow review 的閾值？（多久算 slow？）
 3. claim 驗證結果要不要回寫知識庫？（累積「已驗證事實」）
 4. 人類審查節點：論文送審需要人 approve 嗎？

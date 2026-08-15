@@ -49,7 +49,7 @@
 
 | 方案 | 說明 | 取捨 |
 |---|---|---|
-| **Fork Overleaf CE** | AGPL；realtime + document-updater + docstore + history 四服務 | 功能完整但重、license 傳染 |
+| **直接整合開源方案** | Overleaf CE 或更輕的開源 LaTeX editor（政策見 decisions.md D7：有開源替代直接用/整合/重寫） | 先盤點候選；Overleaf CE 需四服務（realtime + updater + docstore + history）偏重 |
 | **自建 Yjs-based editor** | CodeMirror 6 + Yjs 協同 + 自建 compile service（tectonic / latexmk in Docker）| 輕量、可掌控、較多工作 |
 | **只用 markdown + pandoc** | 不即時協同，寫完轉 PDF | 最簡；但不像 overleaf |
 

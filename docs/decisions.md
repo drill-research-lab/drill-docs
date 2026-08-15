@@ -87,6 +87,19 @@
 
 ---
 
+## D7. 開源替代品直接用；license 不列為決策因素（2026-08-16）
+
+**決策**：
+- reference.md 的外部專案是**研究參考**（學設計、理解機制）
+- 實作時**若有開源替代品，直接拿來用 / 整合 / 重寫皆可**——不需要因為 license 繞路
+- Drill 本身要開源，因此整合 OSS 不構成障礙
+
+**理由**：license 約束的是「重複分發程式碼」；Drill 開源釋出，整合任何 OSS 都有可行路徑。文件中的 license 註記（reference.md）僅為參考專案的事實描述，不是 Drill 的決策輸入。
+
+**注意**：設計文件中出現的「fork/embed 某專案」字樣（如 paper.md 的「Fork Overleaf CE」選項）是調查過程的選項枚舉，**不是產品需求**；原始需求以 manpage.md 為準（例：paper mode =「自帶 latex builder / preview / pdf viewer，像 overleaf 一樣」，非「fork overleaf」）。
+
+---
+
 ## 待釐清項目
 
 | # | 項目 | 狀態 |

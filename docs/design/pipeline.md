@@ -92,7 +92,7 @@
 
 ## 開放問題
 
-1. v1 用 n8n（功能全但 license 有風險）還是自建簡化版（掌控但工作量）？
-2. pipeline 的「MCP server expose」——每個 pipeline 一個 MCP server，還是統一一個 server 動態註冊？
+1. v1 用 n8n（功能全；但 TypeORM+DI 重、無純 library 執行 API、batch 非 stream）還是自建簡化版（掌控但工作量）？（純技術取捨——license 已由 decisions.md D7 排除在考量外）
+2. pipeline 被 agent 呼叫的路徑（未定）：a) MCP expose（每 pipeline 一個 server vs 統一動態註冊）——**內部** agents 以 MCP tool 形式呼叫；b) **subagent-like 派遣**（跟 librarian 等其他 agent 一樣）——可能更自然；兩者可並存
 3. pipeline builder agent 的權限：可以改自己的定義嗎？還是只能建新的？
 4. cron job 的失敗處理：retry 幾次？通知誰？

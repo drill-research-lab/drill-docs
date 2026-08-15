@@ -120,6 +120,7 @@ storage..etc
 |---|---|
 | [reference.md](reference.md) | 所有參考專案總覽（OSS/CLOSED/MAIN 標記、深度調查、命名陷阱） |
 | [DSH.md](DSH.md) | DeepSeek Harness 深度設計調查（15 面向 + 設計決策輸入，commit 級驗證） |
+| [concepts.md](concepts.md) | Agent 工程術語階梯：prompt / context / harness / loop / graph engineering（2026-08 基準） |
 | [decisions.md](decisions.md) | 專案決策紀錄（雙軌策略、自進化、storage 定義、部署、分工） |
 | [design/](design/) | 每個 mode 的詳細設計 |
 | [disscuss.md](disscuss.md) | ⚠️ 已棄用——早期 Spark 階段討論，僅存歷史 |

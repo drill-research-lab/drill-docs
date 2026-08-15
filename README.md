@@ -1,6 +1,6 @@
 # Drill 🌀 — 全自動研究系統設計文件
 
-> **Drill（鑽頭）**：打造一個全自動研究平台，整合知識來源 → 選題 → 搜尋 → 調查 → 實驗 → 報告的完整 pipeline，每個階段皆可 loop 直到完善。
+> **Drill（鑽頭）**：打造一個全自動研究平台：workflow pipeline 可自建、可被 cron 排程或 MCP toolcall 觸發。「知識來源 → 選題 → 搜尋 → 調查 → 實驗 → 報告，每階段可 loop」只是其中一種 pipeline 模板。
 > 本 repo 存放 Drill 的**設計文件**（無程式碼）。
 
 ---
@@ -10,9 +10,10 @@
 | 文件 | 內容 |
 |---|---|
 | [docs/manpage.md](docs/manpage.md) | **起點**。側邊欄總覽：10 個 mode 的簡介與設計文件連結 |
-| [docs/disscuss.md](docs/disscuss.md) | 設計理念：13-stage research pipeline、蒸餾策略、參考系統 |
+| [docs/disscuss.md](docs/disscuss.md) | ⚠️ 已棄用（僅存歷史）。早期 Spark 階段討論：蒸餾策略（調查大家的研究用法與痛點）、13-stage 隨手草稿、參考系統 |
 | [docs/reference.md](docs/reference.md) | 所有參考專案總覽（OSS/CLOSED/MAIN 標記、深度調查、命名陷阱校正） |
 | [docs/DSH.md](docs/DSH.md) | DeepSeek Harness 深度設計調查（15 面向、commit 級驗證、Drill 決策輸入） |
+| [docs/concepts.md](docs/concepts.md) | Agent 工程術語階梯：Prompt → Context → Harness → Loop → Graph engineering（2023–2026 命名史、判別法與 Drill 對應） |
 | [docs/design/](docs/design/) | 每個 mode 的詳細設計（共 10 份） |
 
 ## 核心架構
@@ -34,7 +35,7 @@
 
 **關鍵設計原則**：
 - **任意 agent 可 call 任意 agent**（peer-to-peer subagent 派遣，sync/async）
-- **13-stage research pipeline** 每階段可 loop / 分支 / 回溯
+- **研究法蒸餾**：調查大家的研究用法與痛點 → 抽象共同模式 → 沉澱成 workflow 模板（disscuss.md 的 13-stage 表是早期討論隨手記下的草稿，非 spec）
 - **複用優先**：PI 生態系 30+ plugins、DSH/Cordis、學術工具鏈
 - **硬體約束**：DeepSeek-V4-Flash-0731 @ DGX Spark（128GB unified memory）
 

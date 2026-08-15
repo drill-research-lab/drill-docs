@@ -55,7 +55,7 @@ PI 的 **pi-mcp-adapter**（`docs/reference.md` §9）提供完整 MCP bridge：
 | **Web 研究** | pi-web-access（web_search / fetch_content / code_search）|
 | **Pipeline expose** | pipeline 建立後自動成為 MCP server，其他 agent 可呼叫 |
 | **知識庫** | KB MCP（向量檢索）|
-| **Drill 自身 expose** | Drill 的 agent 可被外部 MCP client 呼叫（反向）|
+| ~~Drill 自身 expose~~ | 不做（見開放問題 #1）；Drill 的 MCP 皆為內部使用 |
 
 ## UI 需求
 
@@ -74,6 +74,6 @@ PI 的 **pi-mcp-adapter**（`docs/reference.md` §9）提供完整 MCP bridge：
 
 ## 開放問題
 
-1. Drill 自己要不要 expose 成 MCP server？（反過來讓外部工具呼叫 Drill 的 agents）——pi-mcp-adapter 目前只消費不提供，要自建
+1. ✅ 已解決（2026-08-16）：**不做 Drill 反向 expose**。Drill 的 MCP 是內部基礎設施（builder / config / setting，給內部 agents 消費，含 pipeline expose 的 tools）。若未來真要讓外部工具（IDE 等）接 Drill 的 agents，會選 ACP（DSH 內建）而非 MCP——但目前沒有這個計畫
 2. MCP server 的**隔離**：第三方 MCP server 的程式碼（stdio process）要在沙盒跑嗎？
 3. 每個 project 一份 MCP config 還是 global 一份？
