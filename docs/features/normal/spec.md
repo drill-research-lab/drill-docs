@@ -14,6 +14,7 @@
 ### 主要 agent：orchestrator（main）
 
 - 參考：HERMES Agent 的範式（`docs/reference.md` §2）
+- 參考: opencode/oh-my-openagent : sisyphus
 - **行為約束**：知道所有其他 agent 的存在與能力，能自行判斷何時該委派哪個 subagent
 - **核心工具**：
   - `spawn_subagent(agent_type, task, context_mode)` — 派遣任何 agent（sync / async）
@@ -34,20 +35,11 @@
 
 ### 參考：DSH 四個 agent presets（default agent 分層的現成模型）
 
-> DSH 預設四個 agent preset（`standard` / `minimal` / `code` / `cordis`，定義在 `agent.cordis.yml`；詳細見 [reference/dsh.md](../../reference/dsh.md) §9）。對 Drill 的 agent 分層（主力 agent ↔ pipeline 節點 agent ↔ 自進化 meta-agent）是直接可抄的參考：
-
-| DSH preset | 內容（DeepWiki 實證 2026-08-16） | Drill 對應 |
-|---|---|---|
-| `standard` | 完整 agent：persona + instructions + 全 toolset（e2e 實測 23 個 tools，含 `ralph`、`workflow`、`subagent`/`subagent_fork`、`send_message`、`interrupt_agent`…） | orchestrator / researcher / writer 等主力 agents |
-| `minimal` | 固定 prompt 雙 tool agent（僅 persistent bash + str_replace_editor），`complete: true` + 無 runtime context、無 compaction | pipeline 的 **simple llm / mini agent 節點**（輕量、可預測） |
-| `code` | standard 全部 + `tool-presentation` row → Code Mode（model 寫 TS 打 generated SDK，五個 round trip 變一個） | researcher 的程式密集任務（可選強化） |
-| `cordis` | standard 全部 + self-referential toolset（`cordis_mount` 直接對 live runtime 跑 model 寫的 JS；官方定位「**建 custom agent presets** + runtime inspection + plugin 實驗」）；TRUST 標示「等同 shell access」 | **D2 自進化 meta-agent**（讀 spec → 生成/調整 plugin → 沉澱成 preset） |
-
-Preset 機制本身也值得抄（DeepWiki 實證）：preset = 目錄 + `agent.cordis.yml`；roster 每 process mount 一次（standing scope），各 session 以 scope parentage 加入；service row 必須在 `isolate` realm 內否則 mount 時直接 reject（防跨 session 撞名）；authoring 只允許 copy（`ctx.agentPresets.copy`，唯一寫入），id 限制 `[a-z0-9][a-z0-9-]*`。
+> DSH 的 preset 分層（standard→主力、minimal→pipeline 節點、cordis→自進化）對 Drill 的 agent 分層是直接可抄的參考——完整對照表已移至 [dsh.md](dsh.md)（Track B 註記），[reference/dsh.md](../../reference/dsh.md) §9 有原始調查。
 
 ## Subagent 派遣機制（核心 primitive）
 
-> 參考：OpenCode task tool + oh-my-openagent + pi-subagents（`docs/reference.md` §1, §9）
+> 參考：OpenCode task tool + oh-my-openagent + pi-subagents（[reference/domains.md](../../reference/domains.md) §1、[reference/pi-ecosystem.md](../../reference/pi-ecosystem.md)）
 
 ### 需求
 
@@ -79,12 +71,7 @@ interface SpawnSubagentParams {
 
 ### 實作選項
 
-| 選項 | 說明 | 取捨 |
-|---|---|---|
-| **pi-subagents**（現成） | `subagent()` tool + workflowScript + builtin agents（scout/researcher/worker/reviewer/oracle） | 最快；但 builtin agents 是 coding 導向，需自訂 Drill agents |
-| **oh-my-openagent task tool**（參考） | category-based routing + omo.jsonc agent 定義 | 架構最合；但它是獨立 harness 不是 library |
-| **DSH subagents seam**（參考） | providers：spawn-in-process / fork / acp / codex / claude-code | 最完整；但要整包用 Cordis |
-| **自建** | 在 pi-agent-core 上做 `spawn_subagent` tool | 完全掌控 context 隔離；工作量大 |
+各軌道的實作選項：**Track A**（pi-subagents / omo 參考 / 自建於 pi-agent-core）→ [pi.md](pi.md)；**Track B**（DSH subagents seam）→ [dsh.md](dsh.md)。
 
 ## UI 需求
 
