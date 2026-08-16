@@ -41,13 +41,13 @@ AGENT: librarian
 
 ## pipeline mode
 
-可以建立 pipeline 與 cornjob 
+可以建立 pipeline 與 cronjob 
 就像是 n8n 在做的事情
-使用者或是 pipeline builder 可以設定 cornjob 定期執行或是被 toolcall 觸發 (as mcp)
+使用者或是 pipeline builder 可以設定 cronjob 定期執行或是被 toolcall 觸發 (as mcp)
 每個節點可以是程式碼/agent/llm
 建立完之後可以被 agent 呼叫 (like mcp) 或是 cronjob 觸發
 
-AGENT: 可以 mutistep 執行（設定 prompt/skills/tools），完成後傳給後續節點
+AGENT: 可以 multistep 執行（設定 prompt/skills/tools），完成後傳給後續節點
 llm: single llm ask 然後傳給後續節點
 
 AGENT: pipeline builder / mini agent / simple llm

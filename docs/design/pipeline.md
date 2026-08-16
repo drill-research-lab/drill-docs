@@ -20,7 +20,7 @@
 | 節點類型 | 行為 | 說明 |
 |---|---|---|
 | **simple llm** | single LLM ask，結果傳給後續節點 | 最輕 |
-| **mini agent** | mutistep 執行（設定 prompt / skills / tools），完成後傳給後續節點 | 中等 |
+| **mini agent** | multistep 執行（設定 prompt / skills / tools），完成後傳給後續節點 | 中等 |
 | **pipeline builder** | 完整 agent，可動態建立/修改 pipeline | 最重 |
 
 ### pipeline builder agent
@@ -43,14 +43,14 @@
 └─────────┘     └─────────┘     └─────────┘
      │               │               │
      ▼               ▼               ▼
-  input        mutistep          output
+  input        multistep         output
   (prompt)     (prompt+           (結果)
                skills+tools)
 ```
 
 - **Data flow**：節點輸出 = 後續節點輸入（JSON）
 - **Branching**：條件分支（if/else）
-- **Parallel**：fan-out（n8n `runs.all` / pi-dynamic-workflows 模式）
+- **Parallel**：fan-out（pi-subagents workflowScript 的 `runs.all` / pi-dynamic-workflows 模式）
 - **Retry / Gate**：節點失敗重試；acceptance gate（結果驗證後才往下）
 - **State**：pipeline 執行狀態持久化，可 resume（long-running research workflow）
 

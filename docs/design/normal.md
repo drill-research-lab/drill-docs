@@ -32,6 +32,19 @@
 | pipeline builder | 建立 pipeline | pipeline mode |
 | mini agent / simple llm | 輕量單次任務 | pipeline mode |
 
+### 參考：DSH 四個 agent presets（default agent 分層的現成模型）
+
+> DSH 預設四個 agent preset（`standard` / `minimal` / `code` / `cordis`，定義在 `agent.cordis.yml`；詳細見 [DSH.md](../DSH.md) §9）。對 Drill 的 agent 分層（主力 agent ↔ pipeline 節點 agent ↔ 自進化 meta-agent）是直接可抄的參考：
+
+| DSH preset | 內容（DeepWiki 實證 2026-08-16） | Drill 對應 |
+|---|---|---|
+| `standard` | 完整 agent：persona + instructions + 全 toolset（e2e 實測 23 個 tools，含 `ralph`、`workflow`、`subagent`/`subagent_fork`、`send_message`、`interrupt_agent`…） | orchestrator / researcher / writer 等主力 agents |
+| `minimal` | 固定 prompt 雙 tool agent（僅 persistent bash + str_replace_editor），`complete: true` + 無 runtime context、無 compaction | pipeline 的 **simple llm / mini agent 節點**（輕量、可預測） |
+| `code` | standard 全部 + `tool-presentation` row → Code Mode（model 寫 TS 打 generated SDK，五個 round trip 變一個） | researcher 的程式密集任務（可選強化） |
+| `cordis` | standard 全部 + self-referential toolset（`cordis_mount` 直接對 live runtime 跑 model 寫的 JS；官方定位「**建 custom agent presets** + runtime inspection + plugin 實驗」）；TRUST 標示「等同 shell access」 | **D2 自進化 meta-agent**（讀 spec → 生成/調整 plugin → 沉澱成 preset） |
+
+Preset 機制本身也值得抄（DeepWiki 實證）：preset = 目錄 + `agent.cordis.yml`；roster 每 process mount 一次（standing scope），各 session 以 scope parentage 加入；service row 必須在 `isolate` realm 內否則 mount 時直接 reject（防跨 session 撞名）；authoring 只允許 copy（`ctx.agentPresets.copy`，唯一寫入），id 限制 `[a-z0-9][a-z0-9-]*`。
+
 ## Subagent 派遣機制（核心 primitive）
 
 > 參考：OpenCode task tool + oh-my-openagent + pi-subagents（`docs/reference.md` §1, §9）
@@ -46,7 +59,7 @@
    - `fully-isolated`：reviewer 用，零污染
    - `shared-project`：librarian/wiki 用，繼承 project 知識
    - `fresh-inherits-task`：pipeline node 用，只有 task 描述
-4. **深度 / 遞迴保護**：`max_depth`（oh-my-openagent 預設 2；OpenCode 預設 1）
+4. **深度 / 遞迴保護**：`max_depth`（pi-subagents 的 `maxSubagentDepth` 預設 2；OpenCode `subagent_depth` 預設 1——DeepWiki 實證）
 5. **權限繼承**：child 繼承 parent 的 deny rules；預設禁止 `spawn_subagent` 無限遞迴
 
 ### 規格草案

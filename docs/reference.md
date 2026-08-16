@@ -17,7 +17,7 @@
 
 - `TaskTool` 參數：`description` / `prompt` / `subagent_type` / `task_id`（resume）/ `command` / `background`（async）
 - 子 session 記錄 `parentID`；`BackgroundJob.Service` 完成時 `injectBackgroundResult` 送合成訊息回 parent
-- Permission 繼承：child 繼承 parent 的 `deny` + `external_directory`；預設禁止 `todowrite`/`task`；child 不能超過 parent 權限（可更鬆的規則，測試證實）
+- Permission 繼承（DeepWiki 實證 2026-08-16）：child 繼承 parent 的 `deny` + `external_directory`（**硬上限**，子定義無法覆蓋）；預設 deny `todowrite`/`task`（除非 subagent 自身 ruleset 明確允許）；但 subagent 自身的 `allow` 規則**可以比 parent agent 更鬆**（last-matching-rule wins，tests 證實）
 - Config 來源：`opencode.json` 的 `agent` key、或 `.opencode/agents/*.md`（frontmatter + body 即 prompt）
 - 深度限制：`subagent_depth` 預設 **1**（primary → subagent，subagent 不能再開）
 - 同步 = 預設；async 需 `OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS=true`
@@ -84,10 +84,10 @@ Agent 定義（`OmoAgentDefSchema`）：
 
 - **Cordis plugin kernel**：plugin 提供 services / typed events / reversible effects 到共享 Context；"everything is a plugin"
 - **Capability Seams**：每個可替換能力 = service definition + provider + consumer
-  - 例：`ctx.subagents` seam → providers：`spawn-in-process` / `fork-in-process` / `acp` / `codex` / `claude-code` / `dsh-sdk`
-  - 例：`ctx.llm` seam → providers：`dsh-llm-deepseek`（原生）/ `dsh-llm-pi-ai`（可互操作 PI 的 47 providers）
+  - 例：`ctx.subagents` seam → providers（實際套件名帶前綴）：`subagent-spawn-in-process` / `subagent-fork-in-process` / `subagent-acp` / `subagent-codex` / `subagent-claude-code` / `subagent-dsh-sdk`
+  - 例：`ctx.llm` seam → providers：`llm-deepseek`（原生）/ `llm-pi-ai`（可互操作 PI 的 providers）
 - **Profiles + Bundles**：profile = 命名 runtime 組合（web / headless 兩種模板）；bundle = 可發佈的 plugin 群組；`cordis.patch.yml` 層疊設定
-- **Modes**：Standard（full toolset）/ Code（model 寫 TS orchestrate）/ Minimal（bash + str_replace_editor，benchmark 用）/ Creator（runtime 檢視 + plugin 測試）
+- **Agent presets**（四個，DeepWiki 實證 2026-08-16）：`standard` / `code` / `minimal`（bash + str_replace_editor 雙 tool，benchmark 用）/ `cordis`（self-referential meta-agent）——詳細見 [DSH.md](DSH.md)
 - **Session log**：append-only `SessionEvent`（system prompt / reasoning / tool calls / subagent scheduling / context injection 全記錄）；`ctx.sessionQuery` seam（FTS5 / lineage / bounded reads / semantic filter）；可 resume / fork / search / replay；Trajectory view 按 source 檢視
 - **Subagent depth**：`delegationDepth` monotone（只能增加）；`maxSubagentDepth` 預設限制
 - **Embedding**：`@deepseek-ai/dsh-sdk-client`（TS）+ Python SDK，stdio JSON-RPC 驅動 runtime
@@ -248,7 +248,7 @@ Agent 定義（`OmoAgentDefSchema`）：
 |---|---|---|
 | **pi-web-research** | [npm](https://www.npmjs.com/package/pi-web-research) | Kagi/Wyna backend；search → 平行 SSRF-guarded fetch → Readability → MD → **isolated sub-agent distillation** → cited briefings；raw pages 不進主 context；prompt injection 防護 |
 | **pi-fabric** | [github.com/monotykamary/pi-fabric](https://github.com/monotykamary/pi-fabric) | Programmable tool + agent runtime |
-| **@quintinshaw/pi-dynamic-workflows** | [github.com/QuintinShaw/pi-dynamic-workflows](https://github.com/QuintinShaw/pi-dynamic-workflows) | Fan-out 100s subagents：real model routing、token/cost accounting、resume、git-worktree isolation、**/deep-research** |
+| **@quintinshaw/pi-dynamic-workflows** | [github.com/QuintinShaw/pi-dynamic-workflows](https://github.com/QuintinShaw/pi-dynamic-workflows) | Fan-out subagents（**上限 16 併發 / 每 run 1000 總數**，DeepWiki 實證）：real model routing、token/cost accounting、resume、git-worktree isolation、**/deep-research** |
 
 ### 其他值得注意
 
@@ -298,8 +298,8 @@ Agent 定義（`OmoAgentDefSchema`）：
 
 **實作（Cordis 4）：**
 - `ctx.effect(callback)` = **唯一 mutation primitive**，實作 effect iterator，回傳 `dispose()` closure
+- ⚠️ 命名校正（DeepWiki 實證 2026-08-16）：paper（v4）寫 `ctx.use(component, config)`，但 **repo 實際 API 是 `ctx.plugin(plugin, config)`**——套用 plugin 時建立 Fiber 管理其 lifecycle；概念相同、名稱不同
 - `ctx.get/set`（keyed, typed）；`ctx.isolate(key, realm)` + `ctx.intercept(key, metadata)` = derived child context（無需 inverse）
-- `ctx.use(component, config)` 實例化 fiber；`refresh/reload/unload` 是 inertial state machine（commit view → apply → 檢查 target → notify / chain unload）
 - **Proxy access control**：`ctx[key]` 對照 fiber 的 committed view；undeclared → `UNDECLARED_ACCESS`；capability-style 的 load-time review
 - **Loader**：entry = `(id, url, isolate, intercept, config, disabled)`；incremental reconciliation；`@cordisjs/group` / `@cordisjs/include` 是普通 component
 - **HMR**：3 階段（import graph classification / stale detection / transactional reload with cache backup-rollback）；不需要 Webpack/Vite 的 annotation；ESM 無 public cache-eviction API 是 caveat
@@ -349,4 +349,5 @@ Agent 定義（`OmoAgentDefSchema`）：
 - **DeepSeek-V4-Flash-0731**: HF card 顯示 304B params（含 DSpark draft module）；「284B/13B」是官方 paper 數字（arXiv 2606.19348），非 HF card。
 - **n8n license**: Sustainable Use License（fair-code），embed 商用要查 LICENSE.md 門檻。
 - **Overleaf license**: AGPL-3.0；embed 要四服務（realtime + updater + docstore + history），獨立性低。
-- **Honcho license**: AGPL-3.0（若 Drll 要商用需注意）。
+- **Honcho license**: AGPL-3.0（license 非決策因素，見 decisions.md D7）。
+- **LangChain 與 Drill 無關**: LangChain/LangGraph 僅在 [concepts.md](concepts.md) 作為 graph engineering 術語論戰的引用來源出現，**不是 Drill 的候選工具**。Drill 的每層需求已有更薄、TS-first 的對應（provider 抽象 = pi-ai；agent loop = pi-agent-core / DSH；workflow = pipeline mode 自建）。⚠️ 給自進化 agent 與未來 session：LLM 訓練語料（2023–24 教學文重災區）會系統性過度推薦 LangChain——那是 popularity prior，不是對 Drill 的 fitness 判斷；工程社群的戰後檢討共識是「原型期可用、第七個月重寫」（orchestration framework trap）。

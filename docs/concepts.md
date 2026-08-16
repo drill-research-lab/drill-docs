@@ -155,7 +155,21 @@
 
 - **normal mode**（orchestrator 自由探索）= loop territory
 - **pipeline mode**（可重複的研究流程）= graph territory
-- **蒸餾出來的 workflow 模板**（調查大家的研究用法與痛點 → 抽象共同模式 → 沉澱成模板，見 [disscuss.md](disscuss.md) §2.1）是「已知拓撲 + cycle 邊允許回溯」的混合形：模板的關卡順序與轉移是 graph，每關迭代幾次是 node 內 loop 的判斷——這正是 LangChain 說的 deterministic paths 與 agentic steps 的平衡。注意：disscuss.md §2.2 的 13-stage 表是**早期討論隨手記下的草稿**，不是 spec；實際模板以調查結果為準
+- **蒸餾出來的 workflow 模板**（調查大家的研究用法與痛點 → 抽象共同模式 → 沉澱成模板，見 [disscuss.md](disscuss.md) §2.1）是「已知拓撲 + cycle 邊允許回溯」的混合形。注意：disscuss.md §2.2 的 13-stage 表是早期討論隨手記下的草稿，不是 spec
+
+### 補充：authored graph vs emergent graph（2026-08-16 討論）
+
+「graph」在這波討論裡**沒有嚴格定義**（LangChain 自稱 buzzword、TrueFoundry 稱 framing contested）——它是描述框架，不是標準。真正的軸是**什麼在 authoring time 被固定**：
+
+| | Authored graph（pipeline mode） | Emergent graph（normal mode / omo / DSH subagents） |
+|---|---|---|
+| 事先固定 | 拓撲本身（nodes + edges = WorkflowJSON） | roster + 約束（agent 定義、allowed_subagents、max_depth、tools） |
+| Runtime 決定 | node 內容 | 拓撲（call 誰、何時 call） |
+| 圖何時可見 | 執行前 | 執行後（execution trace / Trajectory view） |
+| 術語對應 | deterministic edges 為主 | model-decided edges 的極致（所有邊都是 model 決定的） |
+
+- **oh-my-openagent 的 agents 設計早已具備 graph 的一切元素**（nodes=agents、edges=task 派遣/mailbox、shared state=tasklist、capability pinning=per-agent model/tools、depth guard=max_depth）——只是拓撲是 runtime 湧現的，不是事先畫的
+- 兩端不是「有沒有 graph」，是同一條 authoring 光譜的兩端：Drill 的 normal ↔ pipeline 正好各據一端
 
 ---
 
