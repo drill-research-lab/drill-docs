@@ -1,6 +1,6 @@
 # Design: Pipeline Mode
 
-> 對應 manpage.md「pipeline mode」：建立 pipeline 與 cron job，n8n 風格。
+> 對應 index.md（原 manpage）「pipeline mode」：建立 pipeline 與 cron job，n8n 風格。
 > Agent: **pipeline builder / mini agent / simple llm**
 
 ## 定位

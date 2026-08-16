@@ -27,7 +27,7 @@ like chatgpt/gemini web
 像是 call librarian 某個知識庫的內容
 或是 call reviewer 驗證事實
 
-📄 詳細設計 → [`design/normal.md`](design/normal.md)
+📄 詳細設計 → [`features/normal/spec.md`](features/normal/spec.md)
 
 ## wiki mode
 
@@ -37,7 +37,7 @@ RAG ?
 
 AGENT: librarian
 
-📄 詳細設計 → [`design/wiki.md`](design/wiki.md)
+📄 詳細設計 → [`features/wiki/spec.md`](features/wiki/spec.md)
 
 ## pipeline mode
 
@@ -52,7 +52,7 @@ llm: single llm ask 然後傳給後續節點
 
 AGENT: pipeline builder / mini agent / simple llm
 
-📄 詳細設計 → [`design/pipeline.md`](design/pipeline.md)
+📄 詳細設計 → [`features/pipeline/spec.md`](features/pipeline/spec.md)
 
 ## research mode
 可以建立實驗或是 poc
@@ -64,7 +64,7 @@ llm 生成的文件或程式碼可以讓用戶點開在右邊查看，框起來 
 
 AGENT: researcher
 
-📄 詳細設計 → [`design/research.md`](design/research.md)
+📄 詳細設計 → [`features/research/spec.md`](features/research/spec.md)
 
 ## paper mode
 跟 agents 一起建立 paper
@@ -74,7 +74,7 @@ md or latex
 
 AGENT: writer
 
-📄 詳細設計 → [`design/paper.md`](design/paper.md)
+📄 詳細設計 → [`features/paper/spec.md`](features/paper/spec.md)
 
 ## review mode
 
@@ -83,23 +83,23 @@ review 產生的結果
 
 也可以被其他 agent 呼叫 ，在無污染上下文的情況驗證事實，anti 幻覺
 
-📄 詳細設計 → [`design/review.md`](design/review.md)
+📄 詳細設計 → [`features/review/spec.md`](features/review/spec.md)
 
 ## skills 
 add import edit skills files
 
-📄 詳細設計 → [`design/skills.md`](design/skills.md)
+📄 詳細設計 → [`features/skills/spec.md`](features/skills/spec.md)
 
 ## mcp
 add import edit mcps 
 
-📄 詳細設計 → [`design/mcp.md`](design/mcp.md)
+📄 詳細設計 → [`features/mcp/spec.md`](features/mcp/spec.md)
 
 ## setting page
 
 just any setting
 
-📄 詳細設計 → [`design/setting.md`](design/setting.md)
+📄 詳細設計 → [`features/setting/spec.md`](features/setting/spec.md)
 
 ## system status
 
@@ -110,7 +110,7 @@ llm
 network
 storage..etc
 
-📄 詳細設計 → [`design/system-status.md`](design/system-status.md)
+📄 詳細設計 → [`features/system-status/spec.md`](features/system-status/spec.md)
 
 ---
 
@@ -118,10 +118,12 @@ storage..etc
 
 | 文件 | 內容 |
 |---|---|
-| [reference.md](reference.md) | 所有參考專案總覽（OSS/CLOSED/MAIN 標記、深度調查、命名陷阱） |
-| [DSH.md](DSH.md) | DeepSeek Harness 深度設計調查（15 面向 + 設計決策輸入，commit 級驗證） |
+| [tracks/pi.md](tracks/pi.md) | **Track A（PI-based）**：複用地圖、自建 gap、組合架構 |
+| [tracks/dsh.md](tracks/dsh.md) | **Track B（DSH-based，團隊主線）**：fork 狀態、seam↔功能對應 |
+| [reference/](reference/) | 外部參考專案調查（通用，與軌道無關）：總覽＋命名陷阱 |
+| [reference/dsh.md](reference/dsh.md) | DeepSeek Harness 深度設計調查（15 面向 + 設計決策輸入，commit 級驗證） |
 | [concepts.md](concepts.md) | Agent 工程術語階梯：prompt / context / harness / loop / graph engineering（2026-08 基準） |
-| [decisions.md](decisions.md) | 專案決策紀錄（雙軌策略、自進化、storage 定義、部署、分工） |
-| [design/](design/) | 每個 mode 的詳細設計 |
-| [disscuss.md](disscuss.md) | ⚠️ 已棄用——早期 Spark 階段討論，僅存歷史 |
+| [decisions.md](decisions.md) | 專案決策紀錄（雙軌策略、自進化、storage 定義、部署、分工、開源政策） |
+| [features/](features/) | 每個功能的 subfolder：spec.md（共同契約）+ pi.md（Track A 設計）+ dsh.md（Track B 註記） |
+| [archive/disscuss.md](archive/disscuss.md) | ⚠️ 已棄用——早期 Spark 階段討論，僅存歷史（已遷至 archive/） |
 | [art.md](art.md) | 品牌 / 命名（鑽頭、天元突破） |

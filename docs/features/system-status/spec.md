@@ -1,6 +1,6 @@
 # Design: System Status 頁
 
-> 對應 manpage.md「system status」：system status / backend / frontend / llm / network / storage..etc
+> 對應 index.md（原 manpage）「system status」：system status / backend / frontend / llm / network / storage..etc
 
 ## 定位
 

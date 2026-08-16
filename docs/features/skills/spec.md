@@ -1,6 +1,6 @@
 # Design: Skills 管理頁
 
-> 對應 manpage.md「skills」：add / import / edit skills files。
+> 對應 index.md（原 manpage）「skills」：add / import / edit skills files。
 
 ## 定位
 

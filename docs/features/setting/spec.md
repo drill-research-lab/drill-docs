@@ -1,6 +1,6 @@
 # Design: Setting 頁
 
-> 對應 manpage.md「setting page」：just any setting。
+> 對應 index.md（原 manpage）「setting page」：just any setting。
 
 ## 定位
 
@@ -54,7 +54,7 @@
 - 編輯器設定（tab size、font）
 
 ### 8. 通知
-- Discord webhook 整合（disscuss.md 有提 Discord）
+- Discord webhook 整合（archive/disscuss.md 有提 Discord）
 - 電子郵件通知（實驗完成、review 完成）
 - 事件通知設定
 

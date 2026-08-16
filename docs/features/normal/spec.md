@@ -1,6 +1,6 @@
 # Design: Normal Mode
 
-> 對應 manpage.md「normal mode」：主聊天介面，orchestrator agent。
+> 對應 index.md（原 manpage）「normal mode」：主聊天介面，orchestrator agent。
 
 ## 定位
 
@@ -34,7 +34,7 @@
 
 ### 參考：DSH 四個 agent presets（default agent 分層的現成模型）
 
-> DSH 預設四個 agent preset（`standard` / `minimal` / `code` / `cordis`，定義在 `agent.cordis.yml`；詳細見 [DSH.md](../DSH.md) §9）。對 Drill 的 agent 分層（主力 agent ↔ pipeline 節點 agent ↔ 自進化 meta-agent）是直接可抄的參考：
+> DSH 預設四個 agent preset（`standard` / `minimal` / `code` / `cordis`，定義在 `agent.cordis.yml`；詳細見 [reference/dsh.md](../../reference/dsh.md) §9）。對 Drill 的 agent 分層（主力 agent ↔ pipeline 節點 agent ↔ 自進化 meta-agent）是直接可抄的參考：
 
 | DSH preset | 內容（DeepWiki 實證 2026-08-16） | Drill 對應 |
 |---|---|---|
@@ -98,11 +98,11 @@ interface SpawnSubagentParams {
 
 - **Auth**：`setting page` 管理
 - **Session**：每 project 一個 session，可 resume
-- **Memory**：⚠️ 未定——是否要記憶、是否提供 memory 開關設定、scope（per workspace/project vs per user）都還在思考。方向上欣賞 HERMES 的 **skill 機制**（程序性知識的自演化，見 [skills.md](skills.md) 參考模型），而非完整 HERMES memory 範式
+- **Memory**：⚠️ 未定——是否要記憶、是否提供 memory 開關設定、scope（per workspace/project vs per user）都還在思考。方向上欣賞 HERMES 的 **skill 機制**（程序性知識的自演化，見 [skills/spec.md](../skills/spec.md) 參考模型），而非完整 HERMES memory 範式
 - **Skills**：`skills` 頁管理，normal mode 可用 `/skill:name`
 
 ## 開放問題
 
 1. **審核節點**要預設開啟還是關閉？（全自主 vs assistive 的平衡）
-2. **normal mode 的記憶設計（未定）**：是否需要記憶還在思考；可能提供 memory 開關（setting）；scope 待定（per workspace/project vs per user）。目前傾向：程序性知識走 HERMES skill 機制（見 [skills.md](skills.md)），長期對話記憶另案討論
+2. **normal mode 的記憶設計（未定）**：是否需要記憶還在思考；可能提供 memory 開關（setting）；scope 待定（per workspace/project vs per user）。目前傾向：程序性知識走 HERMES skill 機制（見 [skills/spec.md](../skills/spec.md)），長期對話記憶另案討論
 3. subagent 結果要不要全量進 parent context，還是只進 summary？

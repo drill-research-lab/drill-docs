@@ -32,7 +32,7 @@
 - **設計物件**：單一請求的 wording、格式、CoT、few-shot examples
 - **弱時症狀**：model 誤讀那一次 call 的指令
 - **沒死**：loop 的每次迭代仍然需要 prompt；framework 越高階，prompt 越藏在 edge 與 tool 描述裡
-- **Drill 對應**：各 agent persona 的 system prompt 與 tool 描述（`design/*.md` 的 agent 定義）
+- **Drill 對應**：各 agent persona 的 system prompt 與 tool 描述（`features/*/spec.md` 的 agent 定義）
 
 ### 2.2 Context Engineering（2025）
 
@@ -40,7 +40,7 @@
 - **設計物件**：system prompt 的位置、對話歷史保留/摘要/丟棄、RAG chunk 取捨、tool 定義暴露幾個、tool 輸出截斷、AGENTS.md 常駐注入、skills 按需載入（progressive disclosure）
 - **與 prompt 的差別**：prompt 是你手寫的那部分；context 還包括檢索取回的、前幾輪留下的、tool call 回傳的——你沒有逐字重打的那些
 - **弱時症狀**：model 缺所需事實，或淹死在不需要的 token 裡（context rot）
-- **Drill 對應**：`ContextMode` 三種（fully-isolated / shared-project / fresh-inherits-task，見 [design/normal.md](design/normal.md)）；skills 的 progressive disclosure；reviewer 的 clean-context 設計是 context 工程的極致應用——只帶 claim + sources（見 [design/review.md](design/review.md)）
+- **Drill 對應**：`ContextMode` 三種（fully-isolated / shared-project / fresh-inherits-task，見 [features/normal/spec.md](features/normal/spec.md)）；skills 的 progressive disclosure；reviewer 的 clean-context 設計是 context 工程的極致應用——只帶 claim + sources（見 [features/review/spec.md](features/review/spec.md)）
 
 ### 2.3 Harness Engineering（2026 初）
 
@@ -122,7 +122,7 @@
 - **互操作**：A2A / ACP——agents 是需要 edges 的 nodes 時，跨系統委派的標準化才有意義
 - **既有框架**：LangGraph（StateGraph）/ AutoGen GraphFlow / Google ADK（sequential/parallel/loop workflow agents）/ Microsoft Agent Framework 1.0（2026-04 GA，AutoGen+SK 合併）
 
-**Drill 對應**：[design/pipeline.md](design/pipeline.md) 就是 directed agentic graph——
+**Drill 對應**：[features/pipeline/spec.md](features/pipeline/spec.md) 就是 directed agentic graph——
 
 | Graph 概念 | Drill pipeline |
 |---|---|
@@ -155,7 +155,7 @@
 
 - **normal mode**（orchestrator 自由探索）= loop territory
 - **pipeline mode**（可重複的研究流程）= graph territory
-- **蒸餾出來的 workflow 模板**（調查大家的研究用法與痛點 → 抽象共同模式 → 沉澱成模板，見 [disscuss.md](disscuss.md) §2.1）是「已知拓撲 + cycle 邊允許回溯」的混合形。注意：disscuss.md §2.2 的 13-stage 表是早期討論隨手記下的草稿，不是 spec
+- **蒸餾出來的 workflow 模板**（調查大家的研究用法與痛點 → 抽象共同模式 → 沉澱成模板，見 [archive/disscuss.md](archive/disscuss.md) §2.1）是「已知拓撲 + cycle 邊允許回溯」的混合形。注意：disscuss.md §2.2 的 13-stage 表是早期討論隨手記下的草稿，不是 spec
 
 ### 補充：authored graph vs emergent graph（2026-08-16 討論）
 
@@ -210,7 +210,7 @@
 
 | 概念層 | Drill 位置 |
 |---|---|
-| Prompt | 各 agent persona 的 system prompt、tool 描述（`design/*.md`） |
+| Prompt | 各 agent persona 的 system prompt、tool 描述（`features/*/spec.md`） |
 | Context | `ContextMode` 三種、skills progressive disclosure、reviewer clean-context |
 | Harness | DSH（Cordis）/ PI（extensions）雙軌（[decisions.md](decisions.md) D1）；skills / mcp / sandbox / setting 頁 |
 | Loop | pipeline 節點內 mini agent、reviewer 驗證、pipeline 狀態機、節點 retry/gate |

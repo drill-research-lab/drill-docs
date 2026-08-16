@@ -1,6 +1,6 @@
 # Design: Review Mode
 
-> 對應 manpage.md「review mode」：審查產生的結果、或審查其他東西。
+> 對應 index.md（原 manpage）「review mode」：審查產生的結果、或審查其他東西。
 > Agent: **reviewer**
 
 ## 定位

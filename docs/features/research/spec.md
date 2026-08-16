@@ -1,6 +1,6 @@
 # Design: Research Mode
 
-> 對應 manpage.md「research mode」：實驗 / PoC 模式，coding agent 風格。
+> 對應 index.md（原 manpage）「research mode」：實驗 / PoC 模式，coding agent 風格。
 > Agent: **researcher**
 
 ## 定位
@@ -27,7 +27,7 @@
 
 ## 協作模式
 
-manpage 提到「LLM 生成的東西讓用戶點開查看、框起來 suggest fix」——這是 **agent + 用戶共編**：
+index.md（原 manpage）提到「LLM 生成的東西讓用戶點開查看、框起來 suggest fix」——這是 **agent + 用戶共編**：
 
 ```
 LLM 寫 code → 用戶在右側檢視 → 框選片段 → suggest fix → LLM 修改 → 用戶確認 → 執行/驗證

@@ -1,6 +1,6 @@
 # Design: Wiki Mode
 
-> 對應 manpage.md「wiki mode」：知識庫模式，NotebookLM 風格。
+> 對應 index.md（原 manpage）「wiki mode」：知識庫模式，NotebookLM 風格。
 > Agent: **librarian**
 
 ## 定位

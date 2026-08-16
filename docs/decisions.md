@@ -37,7 +37,7 @@
 **邊界**：
 - 自進化負責：照 spec 生成 UI 組件 / 工具 / 一般功能
 - 人工負責：auth、sandbox 等需要安全考量的核心層
-- 呼應 disscuss.md 的「蒸餾」理念：調查 → 抽象 → 沉澱成 template / agent 行為
+- 呼應 archive/disscuss.md 的「蒸餾」理念：調查 → 抽象 → 沉澱成 template / agent 行為
 
 ---
 
@@ -61,7 +61,7 @@
 
 **trace bullet 概念**：建立端到端骨幹（輸入 → LLM → LaTeX → PDF → 網頁）確認彈道能通，再沿著彈道把每個環節做扎實。
 
-**詳細設計**：見 [design/paper.md](design/paper.md) §「第一個垂直切片」。
+**詳細設計**：見 [features/paper/spec.md](features/paper/spec.md) §「第一個垂直切片」。
 
 ---
 
@@ -96,7 +96,7 @@
 
 **理由**：license 約束的是「重複分發程式碼」；Drill 開源釋出，整合任何 OSS 都有可行路徑。文件中的 license 註記（reference.md）僅為參考專案的事實描述，不是 Drill 的決策輸入。
 
-**注意**：設計文件中出現的「fork/embed 某專案」字樣（如 paper.md 的「Fork Overleaf CE」選項）是調查過程的選項枚舉，**不是產品需求**；原始需求以 manpage.md 為準（例：paper mode =「自帶 latex builder / preview / pdf viewer，像 overleaf 一樣」，非「fork overleaf」）。
+**注意**：設計文件中出現的「fork/embed 某專案」字樣（如 paper 的「Fork Overleaf CE」選項，現於 features/paper/）是調查過程的選項枚舉，**不是產品需求**；原始需求以 index.md（原 manpage.md）為準（例：paper mode =「自帶 latex builder / preview / pdf viewer，像 overleaf 一樣」，非「fork overleaf」）。
 
 ---
 

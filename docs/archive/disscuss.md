@@ -1,6 +1,6 @@
 # Auto-Research — 全自動研究系統 (Spark 討論)
 
-> ⚠️ **已棄用（2026-08-15）**：本文件為早期 Spark 階段的討論紀錄，已由 [manpage.md](manpage.md) + [reference.md](reference.md) + [DSH.md](DSH.md) + [design/](design/) 取代。
+> ⚠️ **已棄用（2026-08-15）**：本文件為早期 Spark 階段的討論紀錄，已由 [index.md](../index.md) + [reference/](../reference/) + [features/](../features/) 取代。
 > 僅保留作為歷史脈絡參考。設計以 drill-docs 其他文件為準。
 
 > **North Star**: 打造一個全自動研究平台。整合知識來源 → 選題 → 搜尋 → 調查 → 實驗 → 報告的完整 pipeline，每個階段皆可 loop 直到完善。

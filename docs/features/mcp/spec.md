@@ -1,6 +1,6 @@
 # Design: MCP 管理頁
 
-> 對應 manpage.md「mcp」：add / import / edit mcps。
+> 對應 index.md（原 manpage）「mcp」：add / import / edit mcps。
 
 ## 定位
 

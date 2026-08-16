@@ -7,41 +7,43 @@
 
 ## 文件導覽
 
-| 文件 | 內容 |
-|---|---|
-| [docs/manpage.md](docs/manpage.md) | **起點**。側邊欄總覽：10 個 mode 的簡介與設計文件連結 |
-| [docs/disscuss.md](docs/disscuss.md) | ⚠️ 已棄用（僅存歷史）。早期 Spark 階段討論：蒸餾策略（調查大家的研究用法與痛點）、13-stage 隨手草稿、參考系統 |
-| [docs/reference.md](docs/reference.md) | 所有參考專案總覽（OSS/CLOSED/MAIN 標記、深度調查、命名陷阱校正） |
-| [docs/DSH.md](docs/DSH.md) | DeepSeek Harness 深度設計調查（15 面向、commit 級驗證、Drill 決策輸入） |
-| [docs/concepts.md](docs/concepts.md) | Agent 工程術語階梯：Prompt → Context → Harness → Loop → Graph engineering（2023–2026 命名史、判別法與 Drill 對應） |
-| [docs/design/](docs/design/) | 每個 mode 的詳細設計（共 10 份） |
+| 區 | 文件 | 內容 |
+|---|---|---|
+| 總覽 | [docs/index.md](docs/index.md) | **起點**。10 個功能的簡介與 spec 連結（側邊欄對應） |
+| 總覽 | [docs/concepts.md](docs/concepts.md) | Agent 工程術語階梯：Prompt → Context → Harness → Loop → Graph engineering |
+| 總覽 | [docs/decisions.md](docs/decisions.md) | 跨軌道決策紀錄（雙軌、自進化、開源政策…） |
+| 通用參考 | [docs/reference/](docs/reference/) | 外部專案調查（與軌道無關）：[總覽＋命名陷阱](docs/reference/README.md) · [DSH 深度調查](docs/reference/dsh.md) · Cordis paper 分析 · PI 生態系 plugins · 分域調查（後三者見 reference/ 內） |
+| 雙軌 | [docs/tracks/pi.md](docs/tracks/pi.md) | **Track A（PI-based）**：複用地圖、自建 gap、組合架構 |
+| 雙軌 | [docs/tracks/dsh.md](docs/tracks/dsh.md) | **Track B（DSH-based，團隊主線）**：fork 狀態、seam↔功能對應 |
+| 功能 | [docs/features/](docs/features/) | 每個功能一個 subfolder：`spec.md`（共同契約）+ `pi.md`（Track A 設計）+ `dsh.md`（Track B 註記） |
+| 歷史 | [docs/archive/disscuss.md](docs/archive/disscuss.md) | ⚠️ 已棄用。早期 Spark 階段討論（蒸餾策略、13-stage 隨手草稿） |
 
 ## 核心架構
 
-**10 個 mode**（左側邊欄），每個對應一個 agent persona：
+**10 個功能**（左側邊欄），每個對應 `docs/features/<name>/`：
 
-| Mode | Agent | 定位 |
+| 功能 | Agent | 定位 |
 |---|---|---|
-| [normal](docs/design/normal.md) | orchestrator | 主聊天介面，可 call 其他 agent 做任何事情 |
-| [wiki](docs/design/wiki.md) | librarian | NotebookLM 風格知識庫（上傳文件 → LLM 整理） |
-| [pipeline](docs/design/pipeline.md) | pipeline builder | n8n 風格 workflow + cron（節點 = code/agent/llm） |
-| [research](docs/design/research.md) | researcher | 實驗/PoC，coding agent + 沙盒 |
-| [paper](docs/design/paper.md) | writer | Overleaf 風格論文撰寫（LaTeX/MD） |
-| [review](docs/design/review.md) | reviewer | 無污染上下文事實驗證，anti-幻覺 |
-| [skills](docs/design/skills.md) | — | SKILL.md 管理 |
-| [mcp](docs/design/mcp.md) | — | MCP server 管理 |
-| [setting](docs/design/setting.md) | — | 設定（LLM/沙盒/審核/專案） |
-| [system-status](docs/design/system-status.md) | — | 監控儀表板 |
+| [normal](docs/features/normal/spec.md) | orchestrator | 主聊天介面，可 call 其他 agent 做任何事情 |
+| [wiki](docs/features/wiki/spec.md) | librarian | NotebookLM 風格知識庫（上傳文件 → LLM 整理） |
+| [pipeline](docs/features/pipeline/spec.md) | pipeline builder | n8n 風格 workflow + cron（節點 = code/agent/llm） |
+| [research](docs/features/research/spec.md) | researcher | 實驗/PoC，coding agent + 沙盒 |
+| [paper](docs/features/paper/spec.md) | writer | Overleaf 風格論文撰寫（LaTeX/MD） |
+| [review](docs/features/review/spec.md) | reviewer | 無污染上下文事實驗證，anti-幻覺 |
+| [skills](docs/features/skills/spec.md) | — | SKILL.md 管理 |
+| [mcp](docs/features/mcp/spec.md) | — | MCP server 管理 |
+| [setting](docs/features/setting/spec.md) | — | 設定（LLM/沙盒/審核/專案） |
+| [system-status](docs/features/system-status/spec.md) | — | 監控儀表板 |
 
 **關鍵設計原則**：
 - **任意 agent 可 call 任意 agent**（peer-to-peer subagent 派遣，sync/async）
-- **研究法蒸餾**：調查大家的研究用法與痛點 → 抽象共同模式 → 沉澱成 workflow 模板（disscuss.md 的 13-stage 表是早期討論隨手記下的草稿，非 spec）
+- **研究法蒸餾**：調查大家的研究用法與痛點 → 抽象共同模式 → 沉澱成 workflow 模板（archive/disscuss.md 的 13-stage 表是早期討論隨手記下的草稿，非 spec）
 - **複用優先**：PI 生態系 30+ plugins、DSH/Cordis、學術工具鏈
 - **硬體約束**：DeepSeek-V4-Flash-0731 @ DGX Spark（128GB unified memory）
 
 ## 參考專案速覽
 
-調查了 40+ 開源專案，重點：**OpenCode** / **oh-my-openagent** / **PI (pi.dev)** / **DeepSeek Harness** / **Cordis** / **HERMES** / **Honcho** / **n8n** / **Overleaf** — 詳細見 [docs/reference.md](docs/reference.md)。
+調查了 40+ 開源專案，重點：**OpenCode** / **oh-my-openagent** / **PI (pi.dev)** / **DeepSeek Harness** / **Cordis** / **HERMES** / **Honcho** / **n8n** / **Overleaf** — 詳細見 [docs/reference/](docs/reference/)。
 
 ## 狀態
 

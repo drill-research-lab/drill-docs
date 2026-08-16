@@ -1,6 +1,6 @@
 # Design: Paper Mode
 
-> 對應 manpage.md「paper mode」：與 agents 一起建立 paper。
+> 對應 index.md（原 manpage）「paper mode」：與 agents 一起建立 paper。
 > Agent: **writer**
 
 ## 定位
