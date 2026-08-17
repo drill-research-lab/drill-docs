@@ -11,15 +11,18 @@
 
 ## Agent 設計
 
-### 參考 agent 設計（roster → [reference/domains.md](../../reference/domains.md) §1）
+### OpenCode / oh-my-openagent 設計參考
 
-- **omo Sisyphus**：主 orchestrator 的原型——規劃、派工、aggressive 平行執行、驅動任務到完成（ultrawork 模式）
-- **OpenCode `build`**：primary 互動入口的形態——全工具、Tab 可切換的多 primary 設計
+| 生態 | 參考 agent | 可借設計 | 匹配邊界 |
+|---|---|---|---|
+| OpenCode | `build`（primary） | 預設主互動 agent、廣泛工具權限；以 Task tool 派遣 subagent，並用 `permission.task` 控制可呼叫名單 | 最接近入口與工具面，但不是專門命名的 orchestrator |
+| oh-my-openagent | `Sisyphus`（primary） | 規劃、category / `subagent_type` 雙路派工、平行執行、驗收並驅動任務完成 | **直接對應** Drill orchestrator |
+
+DeepWiki 查證位置：OpenCode `packages/opencode/src/agent/agent.ts`、`packages/opencode/src/tool/task.ts`；omo `docs/guide/orchestration.md`。完整 roster → [reference/domains.md](../../reference/domains.md) §1。
 
 ### 主要 agent：orchestrator（main）
 
 - 參考：HERMES Agent 的範式（`docs/reference.md` §2）
-- 參考: opencode/oh-my-openagent : sisyphus
 - **行為約束**：知道所有其他 agent 的存在與能力，能自行判斷何時該委派哪個 subagent
 - **核心工具**：
   - `spawn_subagent(agent_type, task, context_mode)` — 派遣任何 agent（sync / async）
