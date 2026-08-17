@@ -22,6 +22,37 @@
 - 同步 = 預設；async 需 `OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS=true`
 - 結果回傳 = 最終文字（非全 token stream），XML-like 包裝（sessionID / state / summary）
 
+### OpenCode 內建 agent roster（DeepWiki 實證 2026-08-17）
+
+| Agent | 類型 | 設計 |
+|---|---|---|
+| `build` | primary（預設） | 全工具的開發 agent；Tab 切換 |
+| `plan` | primary | **唯讀規劃**：deny 所有編輯，唯讀白名單只有 `.opencode/plans/*.md`；bash 要許可 |
+| `general` | subagent | 多步驟研究/執行（full tools 除 todowrite） |
+| `explore` | subagent | 快速唯讀 codebase 探索（grep/glob/read/bash/webfetch） |
+| `scout` | subagent | 唯讀**外部 docs / dependency** 調查 |
+| `compaction` / `title` / `summary` | hidden 系統 agents | 壓縮 / 標題 / 摘要 |
+
+自訂：`.opencode/agents/*.md`（frontmatter + body = prompt）或 `opencode.json` 的 `agent` key。
+
+### oh-my-openagent 內建 agent roster（DeepWiki 實證 2026-08-17）
+
+| Agent | 類型 | 設計 |
+|---|---|---|
+| **Sisyphus** | primary | 主 orchestrator：規劃、派工、aggressive 平行執行（ultrawork）；opus 級 model |
+| Hephaestus | primary | autonomous deep worker：架構推理、跨檔 debug、知識綜合 |
+| Prometheus | primary | 策略規劃者：訪談使用者、釐清 ambiguity、產出計畫；**只准寫 .md**（hook 強制） |
+| Atlas | primary | 計畫執行 orchestrator：吃 Prometheus 計畫、分發任務、獨立驗收 |
+| **Oracle** | subagent | 唯讀顧問：陌生 pattern、安全、多系統取捨、hard debugging |
+| **Librarian** | subagent | 文件查找 / multi-repo 分析；唯讀；便宜快 model（luna-fast 級 + v4-flash fallback） |
+| Explore | subagent | 快速 codebase grep / pattern 發現（與 Librarian 同 model 配置） |
+| Metis | subagent | 規劃期的 pre-review：抓計畫漏掉的 gap |
+| Momus | subagent | 計畫審查者：clarity / verification / context 標準；**不可 write/edit** |
+| Multimodal Looker | subagent | PDF / 圖片 / 截圖的視覺分析 |
+| **Sisyphus-Junior** | subagent | 聚焦的 task executor：由 `task(category=...)` 自動路由；不能再派工，避免 delegation loop；category 決定 model / prompt / permission |
+
+> 配對規律：omo 的 primary 四人組（Sisyphus/Hephaestus/Prometheus/Atlas）= 「指揮 / 深工 / 規劃 / 執行」分工；多數 specialist subagents 是唯讀角色，Sisyphus-Junior 則是不可再派工的實作 executor。
+
 ### oh-my-openagent omo.jsonc schema（agent 定義）
 
 Top-level keys：`$schema` / `categories` / `agents` / `codegraph` / `task` / `teams` / `models` / `memory` / `telemetry` / `[opencode]` / `[senpi]` / `[codex]` / `profiles` / `_migrations`
