@@ -32,7 +32,7 @@
 - 專案預設（model、sandbox、memory 設定）
 
 ### 4. 記憶 / 知識庫
-- memory provider 選擇（pi-hermes-memory / pi-knowledge / Honcho…）
+- memory provider 選擇（選型分析 → [wiki/pi.md](../wiki/pi.md) 索引層；provider 清單見 reference）
 - 記憶 scope（global / project / user）
 - 知識庫管理（重建索引、清空）
 

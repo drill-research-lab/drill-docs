@@ -7,7 +7,7 @@
 
 - 像 **NotebookLM + llm-wiki** 的知識庫
 - 使用者**上傳任意文件**，LLM 自動協助整理
-- 文件解析：anydoc / markitdown / OCR
+- 文件解析：常見文書格式 → Markdown（含 OCR 選配）
 - RAG：是候選方案（`RAG ?` 待定）
 
 ## Agent 設計
@@ -26,32 +26,24 @@
 
 ```
 上傳文件 → 解析 → 分塊 → 索引 → 組織
-          (anydoc/     (embedding (vector     (LLM 整理:
-           markitdown/  + 存儲)    DB)         wiki 頁面/關聯)
-           OCR)
+           (文書格式→MD  (embedding (檢索引擎    (LLM 整理:
+            含 OCR 選配)  + 存儲)    見軌道檔)    wiki 頁面/關聯)
 ```
 
-### 解析層（複用現成）
+### 解析層（需求；工具選型見軌道檔）
 
-| 格式 | 工具 | 備註 |
-|---|---|---|
-| Office / PDF / HTML / EPUB | **markitdown**（Python，20+ 格式）| CLI + lib + MCP server |
-| Word/PPT/Excel/PDF → GFM | **anydoc**（Rust，<5ms）| 無 OCR |
-| 掃描 PDF | **markitdown-ocr**（LLM-vision plugin）| 需視覺模型 |
-| arXiv | **pi-arxivist**（pandoc WASM，math 保留）| 論文專用 |
-| YouTube / 影片 | **pi-web-access** 的 `fetch_content`（Gemini multimodal）| 影片摘要 |
+| 格式需求 | 備註 |
+|---|---|
+| Office / PDF / HTML / EPUB（20+ 常見格式）→ Markdown | 必備 |
+| 掃描 PDF（OCR）| 選配（需視覺模型）——開放問題 #3 |
+| arXiv / LaTeX source | 論文專用，math 要保留 |
+| YouTube / 影片 | 影音摘要（multimodal）|
 
-### 索引層（選擇題）
+> 通用工具調查（markitdown / anydoc / OCR 方案）→ [reference/domains.md](../../reference/domains.md) §4；各軌道選型 → [pi.md](pi.md) / [dsh.md](dsh.md)。
 
-| 方案 | 特色 | 取捨 |
-|---|---|---|
-| **pi-knowledge** | Local-first RAG：BM25 + vectors + rerank + code-aware chunking；零 API key embedding | ✅ 最完整現成；`~/.pi/knowledge/` |
-| **pi-hermes-memory** | HERMES 移植：L1-L4 分層 + FTS5 session search | 只有 FTS5，無 vector |
-| **pi-memory + qmd** | 最 popular：daily logs + keyword/semantic/deep 三模式 | 單一 memory 概念，非多 KB |
-| **pi-semantic-memory** | LogosDB MCP：local vector search | stdio-only、每 turn 自動注入 |
-| **自建 RAG**（pgvector/Qdrant）| 完全掌控 | 工作量大 |
+### 索引層（選型題，見軌道檔）
 
-**建議**：v1 用 **pi-knowledge**（最完整的現成 RAG），若要 notebookLM-style 的互連 wiki 再加 **llm-wiki 的三層模型**（raw sources / LLM-generated wiki MD / schema）當組織層。
+檢索方案的選擇（local RAG 引擎、FTS5、vector DB、自建）與「RAG vs llm-wiki 式組織」的取捨——**Track A 選型 → [pi.md](pi.md)**；DSH 線對應 → [dsh.md](dsh.md)。
 
 ## 知識庫模型
 

@@ -55,16 +55,17 @@
 
 | 方案 | 說明 |
 |---|---|
-| **自建 dashboard**（Next.js 頁面 + WebSocket 即時更新）| 與 Drill UI 整合；推薦 |
+| **自建 dashboard**（前端頁面 + WebSocket 即時更新）| 與 Drill UI 整合；推薦 |
 | **Grafana + Prometheus** | 標準監控棧；但要多個服務 |
-| **@braintrust/pi-extension** | 自動 tracing（session/turn/LLM/tool）到 Braintrust |
+
+> 各軌道的 tracing/事件源補充 → [pi.md](pi.md) / [dsh.md](dsh.md)。
 
 ## 資料來源
 
 - 各服務 health endpoint（`/health`）
-- 事件 stream（DSH-style append-only session log / 自建）
+- 事件 stream（append-only 事件 log——各軌道的 session log）
 - 指標收集（自建輕量 metrics 或 Prometheus）
-- **審計 log**（誰做了什麼——Cordis 的 per-interaction attribution 模式）
+- **審計 log**（誰做了什麼——per-interaction attribution）
 
 ## UI 需求
 

@@ -1,6 +1,6 @@
 # Track B：DSH-based（團隊主線）
 
-> [decisions.md](../decisions.md) D1/D2：以 zh-TW DSH fork 為基底。安全層（用戶隔離 / 驗證）人工做；其餘餵 spec 給自進化（`cordis` preset meta-agent，見 [features/normal/spec.md](../features/normal/spec.md) 參考表）生成 plugin。
+> [decisions.md](../decisions.md) D1/D2：以 zh-TW DSH fork 為基底。安全層（用戶隔離 / 驗證）人工做；其餘餵 spec 給自進化（`cordis` preset meta-agent，見 [features/normal/dsh.md](../features/normal/dsh.md) presets 對照）生成 plugin。
 > 深度調查：[reference/dsh.md](../reference/dsh.md)。
 
 ## 狀態

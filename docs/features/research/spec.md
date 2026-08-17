@@ -37,28 +37,22 @@ LLM 寫 code → 用戶在右側檢視 → 框選片段 → suggest fix → LLM 
 
 | Tool | 用途 |
 |---|---|
-| `read` / `write` / `edit` | 檔案操作（pi-coding-agent 內建）|
+| `read` / `write` / `edit` | 檔案操作 |
 | `bash` / `grep` / `glob` / `ls` | 執行與搜尋 |
 | `sandbox_exec` | 沙盒執行（isolate 環境）|
-| `lsp_diagnostics` | 即時 type check（pi-lens 模式）|
+| `lsp_diagnostics` | 即時 type check |
 | `test` | 跑測試 |
 | `git_diff` / `git_commit` | 版本控制 |
 
 ## 沙盒（sandbox）
 
-實驗/實作需要 code 執行環境。選項：
-
-| 方案 | 隔離 | 啟動 | 備註 |
-|---|---|---|---|
-| **Docker per run** | 中等 | ~1-2s | 成熟；v1 建議 |
-| **gVisor / Firecracker microVM** | 強 | 稍慢 | v2 |
-| **Gondolin（PI extension）** | micro-VM | — | PI 生態現成 |
-| **E2B / Daytona 雲沙盒** | 雲端 | 快 | 要聯網、有費 |
-| **context-mode / pi-landstrip** | 多層 | — | PI 生態現成 |
+實驗/實作需要 code 執行環境。隔離需求（安全邊界，設計決策）：
 
 - **網路白名單**：允許 paper API / PyPI / npm；阻擋其他
 - **Quota**：CPU / memory / walltime；timeout 強制 kill
-- **產出**：code / 圖 / log 寫回專案 workspace（MinIO 或本地）
+- **產出**：code / 圖 / log 寫回專案 workspace
+
+> 隔離技術選型（Docker / microVM / 雲沙盒——各軌道候選）→ [pi.md](pi.md) / [dsh.md](dsh.md)。
 
 ## UI 需求
 

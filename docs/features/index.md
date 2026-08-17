@@ -14,16 +14,16 @@
 
 | 功能 | Agent | 定位 | 狀態 |
 |---|---|---|---|
-| [normal](normal/spec.md) | orchestrator | 主聊天介面，可 call 其他 agent 做任何事情 | spec ✅ / [pi](normal/pi.md) 初稿 / [dsh](normal/dsh.md) 初稿 |
-| [wiki](wiki/spec.md) | librarian | NotebookLM 風格知識庫（上傳文件 → LLM 整理） | spec ✅ / [pi](wiki/pi.md) 骨架 / [dsh](wiki/dsh.md) 骨架 |
-| [pipeline](pipeline/spec.md) | pipeline builder | n8n 風格 workflow + cron（節點 = code/agent/llm） | spec ✅ / [pi](pipeline/pi.md) 骨架 / [dsh](pipeline/dsh.md) 骨架 |
-| [research](research/spec.md) | researcher | 實驗/PoC，coding agent + 沙盒 | spec ✅ / [pi](research/pi.md) 骨架 / [dsh](research/dsh.md) 骨架 |
-| [paper](paper/spec.md) | writer | Overleaf 風格論文撰寫（LaTeX/MD）＋ 🥇 第一個垂直切片（國科會報告產生器） | spec ✅ / [pi](paper/pi.md) 骨架 / [dsh](paper/dsh.md) 骨架 |
-| [review](review/spec.md) | reviewer | 無污染上下文事實驗證，anti-幻覺 | spec ✅ / [pi](review/pi.md) 骨架 / [dsh](review/dsh.md) 骨架 |
-| [skills](skills/spec.md) | — | SKILL.md 管理（add / import / edit） | spec ✅ / [pi](skills/pi.md) 骨架 / [dsh](skills/dsh.md) 骨架 |
-| [mcp](mcp/spec.md) | — | MCP server 管理（add / import / edit；內部 agent 用） | spec ✅ / [pi](mcp/pi.md) 骨架 / [dsh](mcp/dsh.md) 骨架 |
-| [setting](setting/spec.md) | — | 設定（LLM/沙盒/審核/專案） | spec ✅ / [pi](setting/pi.md) 骨架 / [dsh](setting/dsh.md) 骨架 |
-| [system-status](system-status/spec.md) | — | 監控儀表板（backend/frontend/llm/network/storage） | spec ✅ / [pi](system-status/pi.md) 骨架 / [dsh](system-status/dsh.md) 骨架 |
+| [normal](normal/spec.md) | orchestrator | 主聊天介面，可 call 其他 agent 做任何事情 | spec ✅ / [pi](normal/pi.md) ✅ / [dsh](normal/dsh.md) ✅ |
+| [wiki](wiki/spec.md) | librarian | NotebookLM 風格知識庫（上傳文件 → LLM 整理） | spec ✅ / [pi](wiki/pi.md) ✅ / [dsh](wiki/dsh.md) ✅ |
+| [pipeline](pipeline/spec.md) | pipeline builder | n8n 風格 workflow + cron（節點 = code/agent/llm） | spec ✅ / [pi](pipeline/pi.md) ✅ / [dsh](pipeline/dsh.md) ✅ |
+| [research](research/spec.md) | researcher | 實驗/PoC，coding agent + 沙盒 | spec ✅ / [pi](research/pi.md) ✅ / [dsh](research/dsh.md) ✅ |
+| [paper](paper/spec.md) | writer | Overleaf 風格論文/報告撰寫（LaTeX/MD）；報告產生器＝模板應用（國科會只是其中一個模板） | spec ✅ / [pi](paper/pi.md) ✅ / [dsh](paper/dsh.md) ✅ |
+| [review](review/spec.md) | reviewer | 無污染上下文事實驗證，anti-幻覺 | spec ✅ / [pi](review/pi.md) ✅ / [dsh](review/dsh.md) ✅ |
+| [skills](skills/spec.md) | — | SKILL.md 管理（add / import / edit） | spec ✅ / [pi](skills/pi.md) ✅ / [dsh](skills/dsh.md) ✅ |
+| [mcp](mcp/spec.md) | — | MCP server 管理（add / import / edit；內部 agent 用） | spec ✅ / [pi](mcp/pi.md) ✅ / [dsh](mcp/dsh.md) ✅ |
+| [setting](setting/spec.md) | — | 設定（LLM/沙盒/審核/專案） | spec ✅ / [pi](setting/pi.md) ✅ / [dsh](setting/dsh.md) ✅ |
+| [system-status](system-status/spec.md) | — | 監控儀表板（backend/frontend/llm/network/storage） | spec ✅ / [pi](system-status/pi.md) ✅ / [dsh](system-status/dsh.md) ✅ |
 
 ## 功能間依賴（示意）
 
@@ -38,7 +38,8 @@ system-status ──監控──► 全部
 
 ## 撰寫規則
 
-1. **spec.md 軌道中立**：不提特定 plugin/seam 名；實作選項表放 pi.md / dsh.md
-2. **pi.md 是深化主戰場**：複用組合（引用 [reference/pi-ecosystem.md](../reference/pi-ecosystem.md)）→ gap 清單 → 建議路線
-3. **dsh.md 先薄後厚**：seam/preset 對應先列，實作細節等 fork 進度
-4. 檔案長大可升級成目錄（`normal/pi.md` → `normal/pi/`），上層結構不動
+1. **spec.md 軌道中立**：spec 放**設計決策**（what），實作相關（plugin/seam/工具選型）放 pi.md / dsh.md
+2. **有 agent 的功能必須有 `## Agent 設計` 區塊**（慣例與 normal 對齊）：`### <agent 名>` + 職責、核心工具、可被誰 call；管理頁類功能（skills/mcp/setting/system-status）無 agent、無此區塊
+3. **pi.md 是深化主戰場**：複用組合（引用 [reference/pi-ecosystem.md](../reference/pi-ecosystem.md)）→ gap 清單 → 建議路線
+4. **dsh.md 先薄後厚**：seam/preset 對應先列，實作細節等 fork 進度
+5. 檔案長大可升級成目錄（`normal/pi.md` → `normal/pi/`），上層結構不動

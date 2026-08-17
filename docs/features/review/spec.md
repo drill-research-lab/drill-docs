@@ -15,12 +15,11 @@
 ### reviewer
 
 - 負責**事實驗證、品質審查、anti-hallucination**
-- 參考：pi-subagents 的 reviewer/oracle builtin agents + portos-wang 的 7-agent reviewer 套件
 - **核心工具**：
   - `verify_claims(claims, sources)` — 事實查核
   - `cross_check(statement)` — 多源交叉驗證
   - `review_document(doc, rubric)` — 品質審查（0-100 rubric）
-  - `check_citations(bib)` — 引用驗證（pi-bib 模式）
+  - `check_citations(bib)` — 引用驗證（DOI-first）
   - `suggest_revisions(feedback)` — 修改建議
 - **可以被 call**：**任何 agent**（這是它的關鍵設計——clean-context 驗證服務）
 
@@ -67,7 +66,7 @@ reviewer 收到 [claim + sources]
 
 ## 品質審查（review rubric）
 
-- 參考 portos-wang 的 7-agent 多視角 review：
+七視角 rubric（每個視角獨立 agent + 0-100 評分 + 具體建議）：
   - 正確性（factual correctness）
   - 完整性（coverage）
   - 一致性（internal consistency）
@@ -75,7 +74,8 @@ reviewer 收到 [claim + sources]
   - 可重現性（reproducibility，實驗類）
   - 寫作品質（clarity / structure）
   - 引用品質（citation validity）
-- 每個視角獨立 agent + 0-100 rubric + 具體建議
+
+> 多視角 review 的現成參考（pi-subagents reviewer/oracle builtin、portos-wang 7-agent 套件——後者未經 DeepWiki 驗證）→ [pi.md](pi.md)。
 
 ## 同步 vs 非同步
 

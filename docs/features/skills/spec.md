@@ -11,11 +11,7 @@
 
 - **SKILL.md** = Agent Skills 標準格式（YAML frontmatter + markdown body）
 - Skill 是 agent 的**能力包**：progressive disclosure（需要時才載入，省 context）
-- 參考生態：
-  - PI：SKILL.md-based，`pi install npm:` 安裝（`docs/reference.md` §2, §9）
-  - oh-my-openagent：4-scope 發現（project > opencode > user > global）
-  - HERMES：skill 自動演化 + Curator 背景維護（見下方「參考模型」，完整細節 `docs/reference.md` §2）
-  - pi-hermes-memory：`skill` tool（create/view/patch/edit/delete）
+- 生態參考（各系統的 skill 機制調查）→ [reference/](../../reference/README.md)：PI（SKILL.md-based + npm installer）、oh-my-openagent（4-scope 發現）、HERMES（自動演化，見下方參考模型）、pi-hermes-memory（`skill` tool）
 
 ## 參考模型：HERMES skill 機制（團隊欣賞的方向）
 
@@ -43,10 +39,9 @@
 - 或用 agent 建立（`/skill:name` 或 natural language → agent 生成 SKILL.md）
 
 ### 3. Import（匯入）
-- 從 **npm**：`pi install npm:@foo/skill`（pi-package 生態）
-- 從 **Git**：`pi install git:github.com/...`
+- 從 **npm** / **Git**（各軌道 installer——Track A 見 [pi.md](pi.md)）
 - 從**檔案**：上傳 SKILL.md / 資料夾
-- 從 **Claude Code / Codex 生態**：portos-wang 的 conversion skill（CLAUDE.md → SKILL.md 對照）
+- 從 **Claude Code / Codex 生態**：格式轉換（CLAUDE.md → SKILL.md 對照）
 
 ### 4. Edit（編輯）
 - 編輯 frontmatter（name / description / 觸發條件）
@@ -71,7 +66,7 @@ description: 什麼時候用這個 skill
 
 ## 整合點
 
-- **4-scope 發現**（參考 oh-my-openagent）：project > opencode > user > global
+- **多層 scope 發現**（project > platform > user > global；參考 oh-my-openagent 的 4-scope）
 - **Agent 使用**：`/skill:name` 或自動觸發（description 匹配）
 - **Skills 與 subagent**：child agent 可帶 skills（`load_skills=[...]`）
 - **Skills 與 pipeline**：mini agent 節點可設定 skills

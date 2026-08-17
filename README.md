@@ -12,7 +12,7 @@
 | 總覽 | [docs/index.md](docs/index.md) | **起點**。10 個功能的簡介與 spec 連結（側邊欄對應） |
 | 總覽 | [docs/concepts.md](docs/concepts.md) | Agent 工程術語階梯：Prompt → Context → Harness → Loop → Graph engineering |
 | 總覽 | [docs/decisions.md](docs/decisions.md) | 跨軌道決策紀錄（雙軌、自進化、開源政策…） |
-| 通用參考 | [docs/reference/](docs/reference/) | 外部專案調查（與軌道無關）：[總覽＋命名陷阱](docs/reference/README.md) · [DSH 深度調查](docs/reference/dsh.md) · Cordis paper 分析 · PI 生態系 plugins · 分域調查（後三者見 reference/ 內） |
+| 通用參考 | [docs/reference/](docs/reference/) | 外部專案調查（與軌道無關）：[總覽＋命名陷阱](docs/reference/README.md) · [DSH 深度調查](docs/reference/dsh.md) · [Cordis paper 分析](docs/reference/cordis.md) · [PI 生態系 plugins](docs/reference/pi-ecosystem.md) · [分域調查](docs/reference/domains.md) |
 | 雙軌 | [docs/tracks/pi.md](docs/tracks/pi.md) | **Track A（PI-based）**：複用地圖、自建 gap、組合架構 |
 | 雙軌 | [docs/tracks/dsh.md](docs/tracks/dsh.md) | **Track B（DSH-based，團隊主線）**：fork 狀態、seam↔功能對應 |
 | 功能 | [docs/features/](docs/features/) | 每個功能一個 subfolder：`spec.md`（共同契約）+ `pi.md`（Track A 設計）+ `dsh.md`（Track B 註記） |

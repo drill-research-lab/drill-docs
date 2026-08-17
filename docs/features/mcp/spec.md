@@ -13,16 +13,11 @@
 - 開放協議：AI app ↔ external tools/data
 - JSON-RPC 2.0；stdio / Streamable HTTP / SSE transports
 - Server capabilities：tools / resources / prompts；Client：sampling / elicitation / logging
-- 官方 repo：`docs/reference.md` §8
+- 官方 repo 見 [reference/domains.md](../../reference/domains.md) §8
 
-## 整合層（複用 pi-mcp-adapter）
+## 整合層
 
-PI 的 **pi-mcp-adapter**（`docs/reference.md` §9）提供完整 MCP bridge：
-- **proxy tool**：單一 `mcp` tool，agent 按需 search/describe/call（省 context）
-- **direct tools**：常用 MCP tools 提升為一等公民
-- **3 種 transport**：stdio / StreamableHTTP / SSE
-- **OAuth 2.1**：dynamic client registration + token 存儲（`~/.pi/agent/mcp-oauth/`）
-- **4 層 config**：user-global / pi-global / project / pi-project（`.mcp.json`）
+MCP client/bridge 的實作：**Track A** → [pi.md](pi.md)（pi-mcp-adapter）；**Track B** → [dsh.md](dsh.md)（dsh-mcp-client）。
 
 ## 頁面功能
 
@@ -34,7 +29,7 @@ PI 的 **pi-mcp-adapter**（`docs/reference.md` §9）提供完整 MCP bridge：
 ### 2. Add（新增）
 - **stdio server**：`command + args`（本地 process，如 `npx @modelcontextprotocol/server-filesystem`）
 - **HTTP server**：`url + headers`（遠端）
-- 從 **npm package**：`pi install npm:...`（pi-mcp-adapter 生態）
+- 從 **npm package** 安裝（各軌道 installer——Track A 見 [pi.md](pi.md)）
 - **認證**：OAuth 2.1 / bearer token（設 token 或 env var）
 
 ### 3. Import（匯入）
@@ -51,10 +46,10 @@ PI 的 **pi-mcp-adapter**（`docs/reference.md` §9）提供完整 MCP bridge：
 
 | 場景 | 說明 |
 |---|---|
-| **研究工具** | paper-pilot MCP（6 學術 DB + Zotero）、Semantic Scholar、OpenAlex |
-| **Web 研究** | pi-web-access（web_search / fetch_content / code_search）|
-| **Pipeline expose** | pipeline 建立後自動成為 MCP server，其他 agent 可呼叫 |
-| **知識庫** | KB MCP（向量檢索）|
+| **研究工具** | 學術 DB / Zotero 類 MCP servers（例：paper-pilot）|
+| **Web 研究** | web search / fetch 類工具（例：pi-web-access——Track A；或對應 MCP servers）|
+| **Pipeline expose** | pipeline 建立後自動成為 MCP server，**內部** agents 可呼叫 |
+| **知識庫** | KB 檢索 MCP（向量檢索）|
 | ~~Drill 自身 expose~~ | 不做（見開放問題 #1）；Drill 的 MCP 皆為內部使用 |
 
 ## UI 需求

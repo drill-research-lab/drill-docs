@@ -15,6 +15,8 @@
 
 ## Agent 設計
 
+Roster：**pipeline builder**（互動入口）＋ 節點執行的 **mini agent / simple llm**（非對話 agent，是 pipeline 的節點型別）。
+
 ### 節點三層複雜度
 
 | 節點類型 | 行為 | 說明 |
@@ -50,7 +52,7 @@
 
 - **Data flow**：節點輸出 = 後續節點輸入（JSON）
 - **Branching**：條件分支（if/else）
-- **Parallel**：fan-out（pi-subagents workflowScript 的 `runs.all` / pi-dynamic-workflows 模式）
+- **Parallel**：fan-out → fan-in（執行期決定目標數量；形態如 pi-subagents 的 `runs.all` / pi-dynamic-workflows——見 [pi.md](pi.md)）
 - **Retry / Gate**：節點失敗重試；acceptance gate（結果驗證後才往下）
 - **State**：pipeline 執行狀態持久化，可 resume（long-running research workflow）
 
