@@ -11,11 +11,14 @@
 
 ## Agent 設計
 
-### 參考 agent 設計（roster → [reference/domains.md](../../reference/domains.md) §1）
+### OpenCode / oh-my-openagent 設計參考
 
-- **無直接對應**：OpenCode / omo 都沒有寫作型 agent（兩者都是 coding 生態）——writer 是 Drill 自有 persona
-- 最接近的形態：**omo Prometheus 的「產物受限」設計**（只准寫特定 artifact、hook 強制）——writer 可類比為「只准寫論文專案目錄」的受限 agent；能力面靠工具鏈（[pi.md](pi.md)）而非 persona
-- 值得借的配置：omo agents 的 **model fallback chain**（寫作可分草稿用快 model、潤飾用大 model）
+| 生態 | 參考 agent | 可借設計 | 匹配邊界 |
+|---|---|---|---|
+| OpenCode | 無內建 writer；建立 custom `academic-writer` subagent | 以 `.opencode/agents/*.md` 定義 persona；permission 先 `"*": "deny"`，再 allow `papers/**/*.md` / `papers/**/*.tex`（last match wins） | 只提供 agent 與檔案權限框架；引用查證、LaTeX compile、學術 rubric 需 Drill tools |
+| oh-my-openagent | `writing` category → `Sisyphus-Junior` | category 選擇 writing model、追加 prose / tone / anti-AI-slop prompt tuning，再由不可重複派工的 executor 完成寫作任務 | 是通用寫作路由，不是 academic writer，也沒有 paper-directory 邊界 |
+
+因此 writer 是 **Drill 自有 persona**，不是硬套現有 built-in。DeepWiki 查證位置：OpenCode agent Markdown/config docs 與 permission rules；omo category routing、agent-model matching 與 Sisyphus-Junior 定義。工具鏈 → [pi.md](pi.md)；完整 roster → [reference/domains.md](../../reference/domains.md) §1。
 
 ### writer
 

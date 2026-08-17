@@ -17,13 +17,16 @@
 
 Roster：**pipeline builder**（互動入口）＋ 節點執行的 **mini agent / simple llm**（非對話 agent，是 pipeline 的節點型別）。
 
-### 參考 agent 設計（roster → [reference/domains.md](../../reference/domains.md) §1）
+### OpenCode / oh-my-openagent 設計參考
 
-- **OpenCode `plan`**：只能寫 `.opencode/plans/*.md` 的規劃 primary——可借其「互動規劃能力完整，但產物邊界由 permission 固定」的設計
-- **omo Prometheus**：「產出結構化 artifact 的規劃者」原型——訪談 → 釐清 → 產出計畫；**只准寫 .md**（hook 強制）＝ builder「只准產出 WorkflowJSON」的同款產物受限設計
-- **omo Atlas**：執行 orchestrator——吃計畫、分發任務給 specialists、獨立驗收；builder 觸發執行的一面
-- **omo Sisyphus-Junior**：由 `task(category=...)` 路由、不能再派工的聚焦 executor——最接近 pipeline 中「接受已定義節點任務並直接完成」的 mini agent
-- **節點 agents 的工具面**：DSH `minimal` preset（雙 tool 固定 prompt 的輕量節點型）——見 [dsh.md](dsh.md)
+| Drill 角色 | OpenCode 參考 | oh-my-openagent 參考 | 匹配邊界 |
+|---|---|---|---|
+| pipeline builder | `plan`（primary）：只能編輯 `.opencode/plans/*.md` 等 plan path | `Prometheus`（primary）：訪談後產出 `.omo/plans/*.md`，由 md-only hook 固定產物邊界 | 兩者都只直接證明「受限規劃 artifact」；`WorkflowJSON` 生成與 DAG 編輯仍是 Drill 自建 |
+| pipeline runner | 無直接內建對應 | `Atlas`（primary）：讀取計畫、逐項 dispatch、驗收與更新進度 | 可借 plan-execution orchestrator pattern，不等同通用 workflow runtime |
+| mini agent | `general`（subagent）：接受多步驟 delegated task | `Sisyphus-Junior`（subagent）：由 `task(category=...)` 路由，聚焦執行且不能再派工 | 對應單節點 executor；category 只決定 model / prompt tuning / permissions，不提供 DAG state |
+| simple llm | 無直接 agent 對應 | 無直接 agent 對應 | 應是無 agent loop 的單次 model call |
+
+DeepWiki 查證位置：OpenCode `packages/opencode/src/agent/agent.ts`；omo `docs/guide/orchestration.md`、Prometheus / Atlas agent 定義與 category routing。節點工具面另參考 DSH `minimal` preset → [dsh.md](dsh.md)；完整 roster → [reference/domains.md](../../reference/domains.md) §1。
 
 ### 節點三層複雜度
 
