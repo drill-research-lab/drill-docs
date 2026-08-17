@@ -12,10 +12,14 @@
 
 ## Agent 設計
 
-### 參考 agent 設計（roster → [reference/domains.md](../../reference/domains.md) §1）
+### OpenCode / oh-my-openagent 設計參考
 
-- **omo Librarian**：同名直系——文件查找 / 多 repo 分析、**唯讀**（不可 write/edit/task）、便宜快 model + 大 model fallback 的配置策略
-- **OpenCode `scout`**：唯讀「外部 docs / dependency 調查」的 subagent 形態（Drill librarian 是它的知識庫版）
+| 生態 | 參考 agent | 可借設計 | 匹配邊界 |
+|---|---|---|---|
+| OpenCode | `scout` / `explore`（subagent） | `scout` 做外部文件與 dependency 調查；`explore` 以 read/grep/glob/web 工具做唯讀搜尋 | 只對應「查找」與唯讀權限；沒有攝取、索引或 wiki 整理能力 |
+| oh-my-openagent | `Librarian`（subagent） | 文件查找、多 repo 分析、唯讀且不可 write/edit/delegate；由 caller 按需派遣 | 名稱與 specialist 形態直接對應，但其資料源是外部 docs/code，不是持久知識庫 |
+
+Drill librarian 在上述查找 specialist 之上增加 `ingest_document`、索引、持久化與 wiki 組織。DeepWiki 查證位置：OpenCode `packages/opencode/src/agent/agent.ts`；omo Librarian agent 定義與 `docs/guide/orchestration.md`。完整 roster → [reference/domains.md](../../reference/domains.md) §1。
 
 ### librarian
 

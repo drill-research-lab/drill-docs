@@ -12,12 +12,14 @@
 
 ## Agent 設計
 
-### 參考 agent 設計（roster → [reference/domains.md](../../reference/domains.md) §1）
+### OpenCode / oh-my-openagent 設計參考
 
-- **omo Oracle**：唯讀驗證顧問的原型——陌生 pattern / 安全 / 多系統取捨的獨立判斷；**不可 write/edit/task**（clean-context 的權限面實作）
-- **omo Momus**：審查者原型——clarity / verification / context 標準的嚴格審查、**不可 write/edit**（只能出意見不能動手）
-- 兩者差異 = reviewer 的兩種模式：Oracle（諮詢式回答）vs Momus（結構化 rubric 審查）——對應 spec 的 fast/slow review
-- OpenCode 無內建 reviewer（慣例是 custom agent）
+| 生態 | 參考 agent | 可借設計 | 匹配邊界 |
+|---|---|---|---|
+| OpenCode | 無內建 reviewer；建立 read-only custom subagent | deny edit/write/bash，只開 read/grep/glob 與查證 tools；Task 預設建立 child session，只傳 task prompt，並繼承 parent deny rules | fresh session 是直接可用的隔離機制；若傳 `task_id` 會續用舊 session，因此 reviewer 必須禁止 resume |
+| oh-my-openagent | `Oracle` + `Momus`（subagent） | Oracle 是不可 write/edit/delegate 的唯讀顧問；Momus 是不可 write/edit 的 one-shot plan reviewer，且使用 canonical review contract | 唯讀權限直接可借；Momus 的 one-shot 最接近 clean review，但兩者都不是事實查核 agent，Oracle 也沒有被證明自動清除歷史 |
+
+Drill 必須額外固定 `fully-isolated`、claim + sources 的最小 prompt 與 VERIFIED / CONTRADICTED / UNVERIFIABLE rubric。DeepWiki 查證位置：OpenCode `packages/opencode/src/tool/task.ts`、`packages/opencode/src/agent/subagent-permissions.ts`；omo Oracle / Momus 定義與 Momus spawn hook。完整 roster → [reference/domains.md](../../reference/domains.md) §1。
 
 ### reviewer
 
