@@ -11,6 +11,12 @@
 
 ## Agent 設計
 
+### 參考 agent 設計（roster → [reference/domains.md](../../reference/domains.md) §1）
+
+- **無直接對應**：OpenCode / omo 都沒有寫作型 agent（兩者都是 coding 生態）——writer 是 Drill 自有 persona
+- 最接近的形態：**omo Prometheus 的「產物受限」設計**（只准寫特定 artifact、hook 強制）——writer 可類比為「只准寫論文專案目錄」的受限 agent；能力面靠工具鏈（[pi.md](pi.md)）而非 persona
+- 值得借的配置：omo agents 的 **model fallback chain**（寫作可分草稿用快 model、潤飾用大 model）
+
 ### writer
 
 - 負責**論文撰寫、LaTeX 生成、文獻引用**

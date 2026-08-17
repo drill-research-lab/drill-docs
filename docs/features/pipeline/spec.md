@@ -17,6 +17,14 @@
 
 Roster：**pipeline builder**（互動入口）＋ 節點執行的 **mini agent / simple llm**（非對話 agent，是 pipeline 的節點型別）。
 
+### 參考 agent 設計（roster → [reference/domains.md](../../reference/domains.md) §1）
+
+- **OpenCode `plan`**：只能寫 `.opencode/plans/*.md` 的規劃 primary——可借其「互動規劃能力完整，但產物邊界由 permission 固定」的設計
+- **omo Prometheus**：「產出結構化 artifact 的規劃者」原型——訪談 → 釐清 → 產出計畫；**只准寫 .md**（hook 強制）＝ builder「只准產出 WorkflowJSON」的同款產物受限設計
+- **omo Atlas**：執行 orchestrator——吃計畫、分發任務給 specialists、獨立驗收；builder 觸發執行的一面
+- **omo Sisyphus-Junior**：由 `task(category=...)` 路由、不能再派工的聚焦 executor——最接近 pipeline 中「接受已定義節點任務並直接完成」的 mini agent
+- **節點 agents 的工具面**：DSH `minimal` preset（雙 tool 固定 prompt 的輕量節點型）——見 [dsh.md](dsh.md)
+
 ### 節點三層複雜度
 
 | 節點類型 | 行為 | 說明 |

@@ -12,6 +12,13 @@
 
 ## Agent 設計
 
+### 參考 agent 設計（roster → [reference/domains.md](../../reference/domains.md) §1）
+
+- **omo Oracle**：唯讀驗證顧問的原型——陌生 pattern / 安全 / 多系統取捨的獨立判斷；**不可 write/edit/task**（clean-context 的權限面實作）
+- **omo Momus**：審查者原型——clarity / verification / context 標準的嚴格審查、**不可 write/edit**（只能出意見不能動手）
+- 兩者差異 = reviewer 的兩種模式：Oracle（諮詢式回答）vs Momus（結構化 rubric 審查）——對應 spec 的 fast/slow review
+- OpenCode 無內建 reviewer（慣例是 custom agent）
+
 ### reviewer
 
 - 負責**事實驗證、品質審查、anti-hallucination**
