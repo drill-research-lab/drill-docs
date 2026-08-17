@@ -11,6 +11,11 @@
 
 ## Agent 設計
 
+### 參考 agent 設計（roster → [reference/domains.md](../../reference/domains.md) §1）
+
+- **omo Sisyphus**：主 orchestrator 的原型——規劃、派工、aggressive 平行執行、驅動任務到完成（ultrawork 模式）
+- **OpenCode `build`**：primary 互動入口的形態——全工具、Tab 可切換的多 primary 設計
+
 ### 主要 agent：orchestrator（main）
 
 - 參考：HERMES Agent 的範式（`docs/reference.md` §2）

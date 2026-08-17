@@ -12,6 +12,11 @@
 
 ## Agent 設計
 
+### 參考 agent 設計（roster → [reference/domains.md](../../reference/domains.md) §1）
+
+- **omo Librarian**：同名直系——文件查找 / 多 repo 分析、**唯讀**（不可 write/edit/task）、便宜快 model + 大 model fallback 的配置策略
+- **OpenCode `scout`**：唯讀「外部 docs / dependency 調查」的 subagent 形態（Drill librarian 是它的知識庫版）
+
 ### librarian
 
 - 負責知識庫的**攝取、整理、查詢**

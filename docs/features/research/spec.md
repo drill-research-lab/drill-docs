@@ -14,6 +14,12 @@
 
 ## Agent 設計
 
+### 參考 agent 設計（roster → [reference/domains.md](../../reference/domains.md) §1）
+
+- **omo Hephaestus**：autonomous deep worker 的原型——深層架構推理、跨檔 debugging、複雜技術任務的長時間自主執行
+- **OpenCode `build` + `general`**：coding agent 範式（全工具 primary + 多步驟研究 subagent）
+- 範式參考：OpenCode / Codex / Claude Code 的 coding agent（工具面：read/write/edit/bash/grep/glob）
+
 ### researcher
 
 - 負責**實驗設計、程式碼實作、PoC 建置**
