@@ -1,6 +1,6 @@
-# Design: Paper Mode
+# Design: Writing（名稱暫定）
 
-> 對應 index.md（原 manpage）「paper mode」：與 agents 一起建立 paper。
+> Legacy internal path：`paper`。Writing 是與 Writer 協作建立 paper、report、proposal 的工作環境；名稱仍可調整。
 > Agent: **writer**
 
 ## 定位
@@ -36,7 +36,7 @@
 
 ```
 研究問題 → 文獻搜尋 → 論文結構規劃 → 分章撰寫 → 引用查證 → 編譯 → 審查迭代
-           (學術 DB      (規劃)        (writer)  (DOI 查證) (latex) (review mode)
+           (學術 DB      (規劃)        (writer)  (DOI 查證) (latex) (Review)
             搜尋引擎)
 ```
 
@@ -81,12 +81,12 @@
 
 - **Wiki**：文獻/引用來源 → librarian 管理
 - **Research**：實驗結果 → researcher 產出 → writer 引用
-- **Review**：初稿 → review mode 送審
+- **Review**：初稿 → Review 送審
 - **Knowledge base**：citation lookup（Zotero / 知識庫）
 
-## 報告產生器（paper mode 的模板應用）
+## 報告產生器（Writing 的模板應用）
 
-> **定位**：報告產生器 = paper mode 的 **template + skills** 組合能力，不是獨立專案。
+> **定位**：報告產生器 = Writing 的 **template + skills** 組合能力，不是獨立專案。
 > 模板只是參數：國科會計畫書、NeurIPS/ICML、IMRAD、技術報告……換模板即換產出，**國科會只是其中一個模板**（緣起：老紀要的第一個具體東西，Discord 2026-08-12「先開一個 Loop 做老紀想要的國科會 AI slop 報告產生器」）。
 
 ### 組成
@@ -117,6 +117,6 @@
 ## 開放問題
 
 1. v1 用 markdown-only 還是 md + latex 並行？
-2. ✅ 已解決：報告產生器＝paper mode 的 template+skills 組合，模板可置換（國科會為其一）
+2. ✅ 已解決：報告產生器＝Writing 的 template+skills 組合，模板可置換（國科會為其一）
 3. 協同編輯（多人同時寫）是 v1 需求嗎？
 4. 引用格式：BibTeX 為主還是支援 CSL（Citation Style Language）？

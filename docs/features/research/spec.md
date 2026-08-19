@@ -1,6 +1,6 @@
-# Design: Research Mode
+# Design: Lab
 
-> 對應 index.md（原 manpage）「research mode」：實驗 / PoC 模式，coding agent 風格。
+> Legacy internal path：`research`。Lab 是實驗 / PoC 與 coding-agent 工作環境。
 > Agent: **researcher**
 
 ## 定位

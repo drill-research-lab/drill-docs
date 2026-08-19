@@ -1,6 +1,6 @@
 # Drill 🌀 — 全自動研究系統設計文件
 
-> **Drill（鑽頭）**：打造一個全自動研究平台：workflow pipeline 可自建、可被 cron 排程或 MCP toolcall 觸發。「知識來源 → 選題 → 搜尋 → 調查 → 實驗 → 報告，每階段可 loop」只是其中一種 pipeline 模板。
+> **Drill（鑽頭）**：以 Workspace / Project 為核心的 AI research workstation，整合 Chat、Library、Pipelines、Lab、Writing、Review、Notebook 與 Files，讓研究資料、對話、實驗、流程與產出在同一工作環境中持續累積與重用。
 > 本 repo 存放 Drill 的**設計文件**（無程式碼）。
 
 ---
@@ -20,20 +20,20 @@
 
 ## 核心架構
 
-**10 個功能**（左側邊欄），每個對應 `docs/features/<name>/`：
+產品名稱以 [Product Vocabulary](docs/product-vocabulary.md) 為準；既有 `docs/features/<name>/` 路徑暫時保留 legacy internal names：
 
-| 功能 | Agent | 定位 |
-|---|---|---|
-| [normal](docs/features/normal/spec.md) | orchestrator | 主聊天介面，可 call 其他 agent 做任何事情 |
-| [wiki](docs/features/wiki/spec.md) | librarian | NotebookLM 風格知識庫（上傳文件 → LLM 整理） |
-| [pipeline](docs/features/pipeline/spec.md) | pipeline builder | n8n 風格 workflow + cron（節點 = code/agent/llm） |
-| [research](docs/features/research/spec.md) | researcher | 實驗/PoC，coding agent + 沙盒 |
-| [paper](docs/features/paper/spec.md) | writer | Overleaf 風格論文撰寫（LaTeX/MD） |
-| [review](docs/features/review/spec.md) | reviewer | 無污染上下文事實驗證，anti-幻覺 |
-| [skills](docs/features/skills/spec.md) | — | SKILL.md 管理 |
-| [mcp](docs/features/mcp/spec.md) | — | MCP server 管理 |
-| [setting](docs/features/setting/spec.md) | — | 設定（LLM/沙盒/審核/專案） |
-| [system-status](docs/features/system-status/spec.md) | — | 監控儀表板 |
+| 產品名稱 | Legacy path | Agent | 定位 |
+|---|---|---|---|
+| [Chat](docs/features/normal/spec.md) | `normal` | Orchestrator 等 modes | Conversations 與 agent 互動入口 |
+| [Library](docs/features/wiki/spec.md) | `wiki` | Librarian | 類似 NotebookLM 或 llm-wiki；管理 Sources、論文庫與 Wiki pages |
+| [Pipelines](docs/features/pipeline/spec.md) | `pipeline` | Pipeline Builder | workflow、templates、cron 與 runs |
+| [Lab](docs/features/research/spec.md) | `research` | Researcher | 實驗 / PoC、coding agent + sandbox |
+| [Writing](docs/features/paper/spec.md) | `paper` | Writer | Overleaf 風格 paper / report / proposal 協作；名稱暫定 |
+| [Review](docs/features/review/spec.md) | `review` | Reviewer | 無污染上下文事實驗證、anti-hallucination |
+| [Skills](docs/features/skills/spec.md) | `skills` | — | SKILL.md 管理 |
+| [MCP Servers](docs/features/mcp/spec.md) | `mcp` | — | MCP server 管理 |
+| [Settings](docs/features/setting/spec.md) | `setting` | — | LLM、sandbox、approval、Project 等設定 |
+| [System Status](docs/features/system-status/spec.md) | `system-status` | — | 監控儀表板 |
 
 **關鍵設計原則**：
 - **任意 agent 可 call 任意 agent**（peer-to-peer subagent 派遣，sync/async）

@@ -1,6 +1,6 @@
-# Design: Review Mode
+# Design: Review
 
-> 對應 index.md（原 manpage）「review mode」：審查產生的結果、或審查其他東西。
+> Legacy internal path：`review`。Review 用於審查產出、事實與其他研究內容。
 > Agent: **reviewer**
 
 ## 定位
@@ -34,7 +34,7 @@ Drill 必須額外固定 `fully-isolated`、claim + sources 的最小 prompt 與
 
 ## 核心設計：無污染上下文（clean-context）
 
-這是 review mode 最重要的特性：
+這是 Review 最重要的特性：
 
 ```
 普通 agent 執行：  [完整對話歷史 + 任務 + 工具結果] → LLM → 輸出
@@ -102,7 +102,7 @@ reviewer 收到 [claim + sources]
 - **claim-level 標記**：在文件/回答中標出每個 claim 的驗證狀態（綠/黃/紅）
 - **對照檢視**：claim ↔ source 並排（side-by-side）
 - **審查工作台**：多視角 review 結果彙整（portos-wang 風格）
-- **送審流程**：從 paper mode 送初稿 → 追蹤 review 進度
+- **送審流程**：從 Writing 送初稿 → 追蹤 Review 進度
 
 ## 整合點
 

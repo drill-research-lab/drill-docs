@@ -1,29 +1,35 @@
-# manpage 
+# Drill Product Surfaces
 
-左邊側邊
+> 產品命名基線見 [Product Vocabulary](product-vocabulary.md)。`normal/wiki/pipeline/research/paper` 等資料夾名稱暫時保留為 legacy internal paths。
 
-page:
+主要頁面：
 
-normal mode
-wiki mode
-pipeline mode
-research mode
-paper mode
-review mode
+- Chat
+- Library
+- Pipelines
+- Lab
+- Writing（暫定）
+- Review
+- Notebook
+- Files
+
+設定／管理：
+
 skills
 mcp
-setting page
-system status
+Settings
+System Status
 
 ## 跨功能設計
 
+- [Product Vocabulary](product-vocabulary.md)：產品頁面、物件、agent 與 Agent / Mode selector 命名基線
 - [Workspace / Project 所有權模型](workspace-project-ownership.md)：Workspace = workstation；Project = 有目標與生命週期的研究工作
 - [Conversation Note / Notebook](conversation-note.md)：每個 Conversation 一份 Note；Notebook 集中瀏覽 Notes
 
 
-## normal mode
+## Chat（legacy path: `normal`）
 
-normal chat mode
+主要 Conversation 與 agent 互動入口。
 
 like chatgpt/gemini web
 但我想讓他是 hermes agent
@@ -34,9 +40,9 @@ like chatgpt/gemini web
 
 📄 詳細設計 → [`features/normal/spec.md`](features/normal/spec.md)
 
-## wiki mode
+## Library（legacy path: `wiki`）
 
-類似 notebookLM 與 llm-wiki
+類似 NotebookLM 或 llm-wiki，但產品名稱使用 Library，與 Conversation Notes 的 Notebook 分開。
 使用者可以上傳任意文件，llm 會自動協助與整理，可能會使用 anydoc 或是 markitdown 或是 ocr
 RAG ?
 
@@ -44,7 +50,7 @@ AGENT: librarian
 
 📄 詳細設計 → [`features/wiki/spec.md`](features/wiki/spec.md)
 
-## pipeline mode
+## Pipelines（legacy path: `pipeline`）
 
 可以建立 pipeline 與 cronjob 
 就像是 n8n 在做的事情
@@ -59,7 +65,7 @@ AGENT: pipeline builder / mini agent / simple llm
 
 📄 詳細設計 → [`features/pipeline/spec.md`](features/pipeline/spec.md)
 
-## research mode
+## Lab（legacy path: `research`）
 可以建立實驗或是 poc
 可以編輯程式碼
 llm 生成的文件或程式碼可以讓用戶點開在右邊查看，框起來 suggest fix 或編輯
@@ -71,7 +77,7 @@ AGENT: researcher
 
 📄 詳細設計 → [`features/research/spec.md`](features/research/spec.md)
 
-## paper mode
+## Writing（legacy path: `paper`；名稱暫定）
 跟 agents 一起建立 paper
 md or latex
 自帶 latex builder / preview / pdf viewer
@@ -81,7 +87,7 @@ AGENT: writer
 
 📄 詳細設計 → [`features/paper/spec.md`](features/paper/spec.md)
 
-## review mode
+## Review（legacy path: `review`）
 
 review 產生的結果
 或是 review 其他東西
@@ -89,6 +95,18 @@ review 產生的結果
 也可以被其他 agent 呼叫 ，在無污染上下文的情況驗證事實，anti 幻覺
 
 📄 詳細設計 → [`features/review/spec.md`](features/review/spec.md)
+
+## Notebook
+
+集中瀏覽每個 Conversation 的 Conversation Note，不是第二套 Wiki。
+
+📄 詳細設計 → [`conversation-note.md`](conversation-note.md)
+
+## Files
+
+Workspace / Project 的檔案與產出物入口；所有權見 Workspace / Project 模型。
+
+📄 詳細設計 → [`workspace-project-ownership.md`](workspace-project-ownership.md)
 
 ## skills 
 add import edit skills files

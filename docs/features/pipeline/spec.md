@@ -1,6 +1,6 @@
-# Design: Pipeline Mode
+# Design: Pipelines
 
-> 對應 index.md（原 manpage）「pipeline mode」：建立 pipeline 與 cron job，n8n 風格。
+> Legacy internal path：`pipeline`。建立 Pipelines、templates、scheduled jobs 與 runs，採 n8n 風格。
 > Agent: **pipeline builder / mini agent / simple llm**
 
 ## 定位

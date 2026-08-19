@@ -1,4 +1,4 @@
-# Review Mode — Track A（PI-based）設計
+# Review — Track A（PI-based）設計
 
 > 對應 [spec.md](spec.md)。Track 總覽：[tracks/pi.md](../../tracks/pi.md)。
 > 原則：最大化複用 PI 生態系（[reference/pi-ecosystem.md](../../reference/pi-ecosystem.md)），gap 才自建。

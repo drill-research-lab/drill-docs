@@ -2,7 +2,7 @@
 
 > 解釋 2023–2026 年業界逐步命名的五個 agent 工程層：**Prompt → Context → Harness → Loop → Graph engineering**。
 > 這不是五個互相取代的潮流，而是**同一個系統的五個樓層**——每層包裹前一層；下層弱，上層只會把錯誤放大得更華麗。
-> 本文件是團隊共同語彙：Drill 的 pipeline mode 本質是 graph engineering，node 內是 loop engineering，承載一切的是 harness。
+> 本文件是團隊共同語彙：Drill 的 Pipelines 本質是 graph engineering，node 內是 loop engineering，承載一切的是 harness。
 > 基準：2026-08。術語仍在演化（LangChain 官方也自嘲這些詞「存在且其來有自，但終究是 buzzword」）。
 
 ---
@@ -153,15 +153,15 @@
 
 > **形狀進 graph，判斷進 loop，探索留在 node 內。**
 
-- **normal mode**（orchestrator 自由探索）= loop territory
-- **pipeline mode**（可重複的研究流程）= graph territory
+- **Chat / Orchestrator**（自由探索）= loop territory
+- **Pipelines**（可重複的研究流程）= graph territory
 - **蒸餾出來的 workflow 模板**（調查大家的研究用法與痛點 → 抽象共同模式 → 沉澱成模板，見 [archive/disscuss.md](archive/disscuss.md) §2.1）是「已知拓撲 + cycle 邊允許回溯」的混合形。注意：disscuss.md §2.2 的 13-stage 表是早期討論隨手記下的草稿，不是 spec
 
 ### 補充：authored graph vs emergent graph（2026-08-16 討論）
 
 「graph」在這波討論裡**沒有嚴格定義**（LangChain 自稱 buzzword、TrueFoundry 稱 framing contested）——它是描述框架，不是標準。真正的軸是**什麼在 authoring time 被固定**：
 
-| | Authored graph（pipeline mode） | Emergent graph（normal mode / omo / DSH subagents） |
+| | Authored graph（Pipelines） | Emergent graph（Chat / omo / DSH subagents） |
 |---|---|---|
 | 事先固定 | 拓撲本身（nodes + edges = WorkflowJSON） | roster + 約束（agent 定義、allowed_subagents、max_depth、tools） |
 | Runtime 決定 | node 內容 | 拓撲（call 誰、何時 call） |
@@ -214,7 +214,7 @@
 | Context | `ContextMode` 三種、skills progressive disclosure、reviewer clean-context |
 | Harness | DSH（Cordis）/ PI（extensions）雙軌（[decisions.md](decisions.md) D1）；skills / mcp / sandbox / setting 頁 |
 | Loop | pipeline 節點內 mini agent、reviewer 驗證、pipeline 狀態機、節點 retry/gate |
-| Graph | pipeline mode：WorkflowJSON、節點三層、cron + MCP trigger、builder agent authoring |
+| Graph | Pipelines：WorkflowJSON、節點三層、cron + MCP trigger、builder agent authoring |
 
 ---
 

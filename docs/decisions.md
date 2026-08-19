@@ -55,9 +55,9 @@
 
 ---
 
-## D4. 國科會報告產生器 = paper mode 的第一個 trace bullet（2026-08-15）
+## D4. 國科會報告產生器 = Writing 的模板應用（2026-08-15；後續校正）
 
-**決策**：老紀要的第一個東西（國科會 AI slop 報告產生器）**不是獨立專案**，而是 paper mode 的 **template + skills** 組合，也是專案第一發 trace bullet。
+**決策**：老紀要的國科會 AI slop 報告產生器**不是獨立專案**，而是 Writing 的 **template + skills** 組合。國科會只是可替換模板之一，**不是預設的第一個 tracer bullet**。
 
 **trace bullet 概念**：建立端到端骨幹（輸入 → LLM → LaTeX → PDF → 網頁）確認彈道能通，再沿著彈道把每個環節做扎實。
 
@@ -96,7 +96,7 @@
 
 **理由**：license 約束的是「重複分發程式碼」；Drill 開源釋出，整合任何 OSS 都有可行路徑。文件中的 license 註記（reference.md）僅為參考專案的事實描述，不是 Drill 的決策輸入。
 
-**注意**：設計文件中出現的「fork/embed 某專案」字樣（如 paper 的「Fork Overleaf CE」選項，現於 features/paper/）是調查過程的選項枚舉，**不是產品需求**；原始需求以 index.md（原 manpage.md）為準（例：paper mode =「自帶 latex builder / preview / pdf viewer，像 overleaf 一樣」，非「fork overleaf」）。
+**注意**：設計文件中出現的「fork/embed 某專案」字樣（如 Writing legacy path `features/paper/` 的「Fork Overleaf CE」選項）是調查過程的選項枚舉，**不是產品需求**；原始需求是「自帶 LaTeX builder / preview / PDF viewer，像 Overleaf 一樣」，非「fork Overleaf」。
 
 ---
 

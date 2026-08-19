@@ -42,7 +42,7 @@
 | **pi-semantic-memory** | [npm](https://www.npmjs.com/package/pi-semantic-memory) | LogosDB MCP server：local-first vector search、stdio-only、每 turn 自動注入 |
 | **@arvoretech/pi-memory** | [npm](https://www.npmjs.com/package/@arvoretech/pi-memory) | Cloud RAG（Qdrant + GitHub OAuth）：org-wide 共享記憶、raw/curated 兩 tier |
 
-### 學術研究工具（paper mode 直接可用）
+### 學術研究工具（Writing 直接可用）
 
 | Plugin | 連結 | 用途 |
 |---|---|---|

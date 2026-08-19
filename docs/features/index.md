@@ -1,6 +1,6 @@
 # Features — 功能區導覽
 
-> Drill 的 10 個功能（= 前端側邊欄）。每個功能一個 subfolder，三檔結構：
+> Drill 的 feature specs。產品名稱以 [Product Vocabulary](../product-vocabulary.md) 為準；既有 subfolder 名稱作為 legacy internal paths 暫不搬移。每個既有功能維持三檔結構：
 >
 > | 檔案 | 角色 | 讀者 |
 > |---|---|---|
@@ -10,20 +10,27 @@
 >
 > 軌道總覽：[tracks/pi.md](../tracks/pi.md) · [tracks/dsh.md](../tracks/dsh.md)。決策（雙軌策略等）：[decisions.md](../decisions.md)。
 
-## 功能列表
+## Feature specs
 
-| 功能 | Agent | 定位 | 狀態 |
-|---|---|---|---|
-| [normal](normal/spec.md) | orchestrator | 主聊天介面，可 call 其他 agent 做任何事情 | spec ✅ / [pi](normal/pi.md) ✅ / [dsh](normal/dsh.md) ✅ |
-| [wiki](wiki/spec.md) | librarian | NotebookLM 風格知識庫（上傳文件 → LLM 整理） | spec ✅ / [pi](wiki/pi.md) ✅ / [dsh](wiki/dsh.md) ✅ |
-| [pipeline](pipeline/spec.md) | pipeline builder | n8n 風格 workflow + cron（節點 = code/agent/llm） | spec ✅ / [pi](pipeline/pi.md) ✅ / [dsh](pipeline/dsh.md) ✅ |
-| [research](research/spec.md) | researcher | 實驗/PoC，coding agent + 沙盒 | spec ✅ / [pi](research/pi.md) ✅ / [dsh](research/dsh.md) ✅ |
-| [paper](paper/spec.md) | writer | Overleaf 風格論文/報告撰寫（LaTeX/MD）；報告產生器＝模板應用（國科會只是其中一個模板） | spec ✅ / [pi](paper/pi.md) ✅ / [dsh](paper/dsh.md) ✅ |
-| [review](review/spec.md) | reviewer | 無污染上下文事實驗證，anti-幻覺 | spec ✅ / [pi](review/pi.md) ✅ / [dsh](review/dsh.md) ✅ |
-| [skills](skills/spec.md) | — | SKILL.md 管理（add / import / edit） | spec ✅ / [pi](skills/pi.md) ✅ / [dsh](skills/dsh.md) ✅ |
-| [mcp](mcp/spec.md) | — | MCP server 管理（add / import / edit；內部 agent 用） | spec ✅ / [pi](mcp/pi.md) ✅ / [dsh](mcp/dsh.md) ✅ |
-| [setting](setting/spec.md) | — | 設定（LLM/沙盒/審核/專案） | spec ✅ / [pi](setting/pi.md) ✅ / [dsh](setting/dsh.md) ✅ |
-| [system-status](system-status/spec.md) | — | 監控儀表板（backend/frontend/llm/network/storage） | spec ✅ / [pi](system-status/pi.md) ✅ / [dsh](system-status/dsh.md) ✅ |
+| 產品名稱 | Legacy path | Agent | 定位 | 狀態 |
+|---|---|---|---|---|
+| [Chat](normal/spec.md) | `normal` | Orchestrator 等 selectable modes | Conversations 與 agent 互動入口 | spec ✅ / [pi](normal/pi.md) ✅ / [dsh](normal/dsh.md) ✅ |
+| [Library](wiki/spec.md) | `wiki` | Librarian | 類似 NotebookLM 或 llm-wiki；管理 Sources、論文庫、Wiki pages 與可重用研究資料 | spec ✅ / [pi](wiki/pi.md) ✅ / [dsh](wiki/dsh.md) ✅ |
+| [Pipelines](pipeline/spec.md) | `pipeline` | Pipeline Builder | n8n 風格 workflow + cron（節點 = code/agent/llm） | spec ✅ / [pi](pipeline/pi.md) ✅ / [dsh](pipeline/dsh.md) ✅ |
+| [Lab](research/spec.md) | `research` | Researcher | 實驗 / PoC、coding agent + sandbox | spec ✅ / [pi](research/pi.md) ✅ / [dsh](research/dsh.md) ✅ |
+| [Writing](paper/spec.md) | `paper` | Writer | Overleaf 風格 paper / report / proposal 協作；名稱暫定 | spec ✅ / [pi](paper/pi.md) ✅ / [dsh](paper/dsh.md) ✅ |
+| [Review](review/spec.md) | `review` | Reviewer | 無污染上下文事實驗證、anti-hallucination | spec ✅ / [pi](review/pi.md) ✅ / [dsh](review/dsh.md) ✅ |
+| [Skills](skills/spec.md) | `skills` | — | SKILL.md 管理（add / import / edit） | spec ✅ / [pi](skills/pi.md) ✅ / [dsh](skills/dsh.md) ✅ |
+| [MCP Servers](mcp/spec.md) | `mcp` | — | MCP server 管理（add / import / edit；內部 agent 用） | spec ✅ / [pi](mcp/pi.md) ✅ / [dsh](mcp/dsh.md) ✅ |
+| [Settings](setting/spec.md) | `setting` | — | LLM、sandbox、approval、Project 等設定 | spec ✅ / [pi](setting/pi.md) ✅ / [dsh](setting/dsh.md) ✅ |
+| [System Status](system-status/spec.md) | `system-status` | — | backend / frontend / LLM / network / storage 監控 | spec ✅ / [pi](system-status/pi.md) ✅ / [dsh](system-status/dsh.md) ✅ |
+
+## 跨功能頁面
+
+| 產品名稱 | 定位 | Spec |
+|---|---|---|
+| Notebook | Conversation Notes 的集中瀏覽入口，不是第二套 Wiki | [conversation-note.md](../conversation-note.md) |
+| Files | Workspace / Project 的檔案與產出物入口 | [Workspace / Project ownership](../workspace-project-ownership.md) |
 
 ## 候選功能（尚未納入 10 個正式功能）
 
@@ -34,10 +41,10 @@
 ## 功能間依賴（示意）
 
 ```
-normal（orchestrator）──call──► wiki / research / paper / review / pipeline
-review（reviewer）◄──sync 驗證── paper / research / normal / wiki
-research ──結果回寫──► wiki（librarian）/ paper（writer）
-pipeline ──cron/MCP 觸發──► 任何 agent 節點；expose 成 tool 給其他 agent
+Chat（Orchestrator）──call──► Library / Lab / Writing / Review / Pipelines
+Review（Reviewer）◄──sync 驗證── Writing / Lab / Chat / Library
+Lab ──結果回寫──► Library（Librarian）/ Writing（Writer）
+Pipelines ──cron/MCP 觸發──► 任何 agent 節點；expose 成 tool 給其他 agent
 skills / mcp / setting ──設定面──► 所有 agent
 system-status ──監控──► 全部
 ```

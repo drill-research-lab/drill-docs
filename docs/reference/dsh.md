@@ -21,7 +21,7 @@
 | Subagent | `ctx.subagents` seam；in-process（spawn/fork）、ACP、codex、claude-code、dsh-sdk 五類 provider；`maxDepth` 預設 3 |
 | Sandbox | `ctx.sandbox` seam：Linux bwrap → Landlock fallback、macOS Seatbelt、Windows restricted-token；fail-closed（無 backend 即拒絕執行） |
 | LLM | `ctx.llm` seam；預設 `dsh-llm-deepseek`（route `deepseek-official`，V4-Flash/V4-Pro）；`dsh-llm-pi-ai` 經 `@earendil-works/pi-ai` 接任意 provider |
-| Profiles / Presets | `web` / `headless` 兩 profile；bundle 分層（base → web-app/headless）＋ `cordis.patch.yml` ＋ `--patch` overlay；四組 agent preset：**standard / code / minimal / cordis**（不是 "Creator"） |
+| Profiles / Presets | `web` / `headless` 兩 profile；bundle 分層（base → web-app/headless）＋ `cordis.patch.yml` ＋ `--patch` overlay；四個 internal preset IDs：`standard` / `code` / `minimal` / `cordis`；Web UI 顯示 Standard / Code（中文 PTC）/ Minimal / Creator mode |
 | Web UI | React + Vite；`packages/client` 下 30+ `ui-*` plugin；slot 系統 `ctx.slots.register`；presentation component 被官方標為「consumables, expected to be rewritten wholesale」 |
 | 外部控制 | ACP server（Agent Client Protocol / JSON-RPC stdio）；另有 JSON-RPC SDK（TypeScript client + Python SDK），protocol 無版本協商、`0.0.1` 無相容承諾 |
 | MCP | 只有 **client**（`dsh-mcp-client`，tools 以 `mcp__<server>__<name>` 註冊進 `ctx.tools`）；DSH **不**作為 MCP server 暴露 |
@@ -271,14 +271,14 @@ patch 以 row id 為目標，整包取代該 row 的 config，或 insert 新 row
 
 `dsh-base` patch 內容例（[base/cordis.patch.yml](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/packages/bundle/base/cordis.patch.yml)）：`timer`、`hmr`、`llm`、`session`、`typert-*`、`session-title-*`、`agent`、`agent-default-model`（provider `deepseek-official` / model `deepseek-v4-flash`）、`jobs-local`、`llm-retry`、`settings-file`。
 
-**Agent presets**（`packages/preset/` + 隨附 presets 在 [apps/cli/config/agent-presets/](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/apps/cli/config/agent-presets/)）— **實際四個是 `standard` / `minimal` / `code` / `cordis`**（任務描述中的 "Creator" 不存在；第四個叫 `cordis`，是 self-referential 的 meta-agent）：
+**Agent presets**（`packages/preset/` + 隨附 presets 在 [apps/cli/config/agent-presets/](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/apps/cli/config/agent-presets/)）— internal IDs 是 `standard` / `minimal` / `code` / `cordis`；Web UI 由 [`presetDisplayText`](https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/client/ui-agent-preset/src/client/locales.ts) 顯示對應 mode 名稱：
 
-| Preset | 內容（agent.cordis.yml） |
-|---|---|
-| `standard` | 完整 coding agent：persona + instructions + `tool-bash`/`tool-pwsh`/`tool-fs`/`tool-fs-search`/`tool-jobs`/`tool-skill`/`tool-goal`/plan/compaction/delegation（含 codex、claude-code）/`tool-ask-user`/`tool-todo`/`tool-web`（`fetch: false`） |
-| `minimal` | 固定 prompt 的雙 tool agent：persona（`complete: true` + `includeRuntimeContext: false`）+ 僅 persistent `bash` + `str_replace_editor`；無 compaction |
-| `code` | `standard` 全部 + `tool-presentation` row → Code Mode（model 寫 TS 程式打 generated SDK，五個 round trip 變一個） |
-| `cordis` | `standard` 全部 + self-referential Cordis toolset（agent 可讀寫自己所在的 runtime、auth 另一個 agent）；TRUST 標示「等同 shell access」 |
+| Internal preset ID | Web UI 名稱 | 內容（agent.cordis.yml） |
+|---|---|---|
+| `standard` | Standard mode／標準模式 | 完整 coding agent：persona + instructions + `tool-bash`/`tool-pwsh`/`tool-fs`/`tool-fs-search`/`tool-jobs`/`tool-skill`/`tool-goal`/plan/compaction/delegation（含 codex、claude-code）/`tool-ask-user`/`tool-todo`/`tool-web`（`fetch: false`） |
+| `minimal` | Minimal mode／極簡模式 | 固定 prompt 的雙 tool agent：persona（`complete: true` + `includeRuntimeContext: false`）+ 僅 persistent `bash` + `str_replace_editor`；無 compaction |
+| `code` | Code mode／PTC 模式 | `standard` 全部 + `tool-presentation` row → model 寫 TS 程式打 generated SDK，五個 round trip 變一個 |
+| `cordis` | Creator mode／創造模式 | `standard` 全部 + self-referential Cordis toolset（agent 可讀寫自己所在的 runtime、auth 另一個 agent）；TRUST 標示「等同 shell access」 |
 
 Preset 機制（[agent-presets/README.md](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/packages/preset/agent-presets/README.md)）：preset = 一個目錄含 `agent.cordis.yml`；roster 每 process 只 mount 一次（standing scope），各 session 以 scope parentage 加入；service row 必須在 `isolate` realm 內否則跨 session 撞名；authoring 只允許 copy（`ctx.agentPresets.copy`），id 限制 `[a-z0-9][a-z0-9-]*`。
 

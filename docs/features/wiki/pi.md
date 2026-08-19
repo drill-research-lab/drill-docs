@@ -1,4 +1,4 @@
-# Wiki Mode — Track A（PI-based）設計
+# Library — Track A（PI-based）設計
 
 > 對應 [spec.md](spec.md)。Track 總覽：[tracks/pi.md](../../tracks/pi.md)。
 > 原則：最大化複用 PI 生態系（[reference/pi-ecosystem.md](../../reference/pi-ecosystem.md)），gap 才自建。
@@ -23,7 +23,7 @@
 | **pi-semantic-memory** | LogosDB MCP：local vector search | stdio-only、每 turn 自動注入 |
 | **自建 RAG**（pgvector/Qdrant）| 完全掌控 | 工作量大 |
 
-**建議（草稿）**：以 **pi-knowledge** 為檢索引擎；若要 NotebookLM 式互連 wiki，加 **llm-wiki 三層模型**（raw sources / LLM-generated wiki MD / schema，見 [reference/domains.md](../../reference/domains.md) §6）當組織層。此選型與 normal mode 記憶選型共用同一決策（見 [normal/pi.md](../normal/pi.md)）。
+**建議（草稿）**：以 **pi-knowledge** 為檢索引擎；若要 NotebookLM 式互連 wiki，加 **llm-wiki 三層模型**（raw sources / LLM-generated wiki MD / schema，見 [reference/domains.md](../../reference/domains.md) §6）當組織層。此選型與 Chat 記憶選型共用同一決策（見 [normal/pi.md](../normal/pi.md)）。
 
 ## 自建 gap 清單
 

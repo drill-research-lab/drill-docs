@@ -1,6 +1,6 @@
-# Design: Wiki Mode
+# Design: Library
 
-> 對應 index.md（原 manpage）「wiki mode」：知識庫模式，NotebookLM 風格。
+> Legacy internal path：`wiki`。Library 類似 NotebookLM 或 llm-wiki，並與 Conversation Notes 的 Notebook 分開。
 > Agent: **librarian**
 
 ## 定位
@@ -29,7 +29,7 @@ Drill librarian 在上述查找 specialist 之上增加 `ingest_document`、索�
   - `kb_search(query)` — 知識庫檢索
   - `kb_summarize(topic)` — 生成主題摘要
   - `kb_link(topic_a, topic_b)` — 建立概念關聯
-- **可以被 call**：normal mode 的 orchestrator、researcher（添加資料請 librarian 更新）、任何其他 agent
+- **可以被 call**：Chat 的 Orchestrator、Researcher（添加資料請 Librarian 更新）、任何其他 agent
 
 ## 文件處理 Pipeline
 
