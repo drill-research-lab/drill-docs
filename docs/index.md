@@ -15,6 +15,11 @@ mcp
 setting page
 system status
 
+## 跨功能設計
+
+- [Workspace / Project 所有權模型](workspace-project-ownership.md)：Workspace = workstation；Project = 有目標與生命週期的研究工作
+- [Conversation Note / Notebook](conversation-note.md)：每個 Conversation 一份 Note；Notebook 集中瀏覽 Notes
+
 
 ## normal mode
 

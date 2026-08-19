@@ -42,6 +42,15 @@
 
 > 工具鏈選型（文獻搜尋 / 論文生成 / 引用驗證 / 全文抓取 / Zotero 的現成工具）→ [pi.md](pi.md)（Track A）；通用調查 → [reference/pi-ecosystem.md](../../reference/pi-ecosystem.md) 學術工具節。
 
+## Writer 協作與預覽行為
+
+- 產品體驗以「使用者與 LLM 一起協作的 Overleaf」為方向；完整 UI 佈局另行討論
+- 論文專案自帶**自動版控**，可查看與回到先前版本
+- LLM 一輪回應若修改了論文內容，回應結束後重新編譯一次並刷新 PDF 預覽
+- 提供 LaTeX LSP 診斷與編譯錯誤資訊，讓使用者與 LLM 都能知道問題位置
+- 編譯失敗時保留上一次成功的 PDF 預覽，同時顯示本次錯誤
+- PDF 預覽與下載沿用 Chat / Wiki 共用的 PDF viewer
+
 ## LaTeX 編輯器（選擇題）
 
 | 方案 | 說明 | 取捨 |

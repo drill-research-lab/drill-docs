@@ -54,6 +54,15 @@ Drill librarian 在上述查找 specialist 之上增加 `ingest_document`、索�
 
 檢索方案的選擇（local RAG 引擎、FTS5、vector DB、自建）與「RAG vs llm-wiki 式組織」的取捨——**Track A 選型 → [pi.md](pi.md)**；DSH 線對應 → [dsh.md](dsh.md)。
 
+## 論文庫與預覽
+
+- 使用者自行上傳，以及 Scheduled Search 找到的論文／檔案，進入同一套論文庫
+- 每份 PDF 同時保留**原始 PDF**與**轉換後 Markdown**兩種內容
+- PDF 入庫時經既有文件解析流程轉換一次；anydoc / markitdown 是目前候選，實際選型見軌道檔
+- 原始 PDF 用於預覽與下載；Markdown 用於知識整理、搜尋與 LLM 使用
+- 使用者可從左側論文／檔案列表直接選取並預覽原始 PDF
+- PDF 預覽沿用 Chat / Writer 共用的 PDF viewer；Viewer 如何取得檔案留待實作設計
+
 ## 知識庫模型
 
 - **source**：原始文件（檔案 + 解析後 markdown）
@@ -62,9 +71,18 @@ Drill librarian 在上述查找 specialist 之上增加 `ingest_document`、索�
 - **embedding**：向量（供 semantic search）
 - **關聯**：概念 ↔ 概念、概念 ↔ source、source ↔ source（引用）
 
+## Pipeline 內容重用
+
+- Pipeline 的 **Source Markdown** 與 **Result Markdown** 都可以加入 Wiki
+- 未指定 Wiki destination 的 Pipeline 預設把內容留在目前 Project；使用者可在執行後手動加入 Wiki
+- Pipeline / template 可配置自動流入指定 Wiki
+- Wiki 必須保留 Source（原始來源）與 Result（模型綜整／分析結果）的類型差異
+- Normal Chat 需要這些內容時，由 orchestrator 呼叫 librarian subagent 查詢，不直接把整個 Wiki 放進 conversation context
+
 ## UI 需求
 
 - **上傳區**：drag & drop / URL / arXiv ID / YouTube
+- **論文／檔案列表**：集中顯示自行上傳與 Scheduled Search 取得的內容，可直接選取預覽
 - **知識庫瀏覽**：wiki 頁面 + 概念圖（graph view，如 Obsidian/llm-wiki）
 - **搜尋**：keyword + semantic（顯示來源引用）
 - **整理狀態**：哪些文件已入庫、哪些在排隊、LLM 整理進度

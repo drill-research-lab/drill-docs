@@ -84,6 +84,9 @@ interface SpawnSubagentParams {
 ## UI 需求
 
 - 聊天介面（markdown rendering + streaming）
+- **PDF 產出物**：Agent 產生或修改 PDF 後，對應訊息直接提供「預覽」與「下載」；預覽留在 Drill 內，沿用 Writer / Wiki 共用的 PDF viewer
+- **Conversation Note**：每個 Conversation 可產生／更新一份 Markdown Note；可請 LLM 修正、直接編輯或重新產生；完整規格見 [conversation-note.md](../../conversation-note.md)
+- **Notebook**：集中瀏覽 Workspace / Project 內的 Conversation Notes，不作為第二套 Wiki
 - **subagent 活動指示器**：目前哪個 subagent 在跑、進度
 - **審核節點**（若啟用）：agent 要 call 敏感 subagent 前顯示確認
 - **上下文管理**：長對話的 compaction 提示、可切換 project

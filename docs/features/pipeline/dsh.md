@@ -20,3 +20,18 @@ DSH `standard` preset 內建 `workflow` tool（e2e 實測 23 tools 之一）—�
 | MCP toolcall trigger | `dsh-mcp-client` 消費側；expose 側待建 |
 | 節點三層（llm/agent/code） | agent presets（`minimal` 節點型 / `standard` builder）；code 節點 = sandbox |
 | 執行狀態 resume | append-only session log + `ctx.sessionQuery` |
+
+## Scheduled Search template（tracer bullet）
+
+對應 [spec.md](spec.md) 的第一個 built-in template：
+
+| Template 元件 | Track B 對應 |
+|---|---|
+| arXiv source（預設） | 需新增 arXiv source adapter（專用 API/MCP）；不以一般 Web 搜尋取代穩定 arXiv ID |
+| 其他 Web sources | `ctx.web` seam；現有 providers：DeepSeek / Exa / Perplexity，model-facing tools 為 `web_search` / `web_fetch` |
+| cron / background run | `ctx.schedule` 可參考，但其 session-local follow-up 不滿足需求；必須補持久化 job registry 與無前端 session worker |
+| normalize / dedupe | code runtime node；優先鍵 arXiv ID → DOI → canonical URL |
+| persistence / provenance | append-only run events + workspace artifact collection；保存 provider、URL、取得時間與 external ID |
+| status | `ctx.sessionQuery` 查 run lineage；另提供 last/next run projection 給 UI |
+
+第一條 e2e 只要求 arXiv；source adapter 介面保留 DSH web providers，後續可直接加入其他 web search tools。

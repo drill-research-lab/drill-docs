@@ -88,11 +88,83 @@ DeepWiki 查證位置：OpenCode `packages/opencode/src/agent/agent.ts`；omo `d
 - 支援：cron expression、時區、失敗重試、執行歷史
 - agent 可以 `pipeline_set_cron()` 動態建立排程
 
+## Built-in Template：Scheduled Search（tracer bullet）
+
+> 需求來源：[老記(neokent)追加需求原文（2026-08-19）](../../requirements/2026-08-19-neokent-followup.md)。
+
+「定時搜尋」不是新 mode 或新 agent，而是第一個 **built-in pipeline template**。它用現有 cron、search tool、artifact storage 與執行記錄串出第一條端到端 tracer bullet。
+
+### Template inputs
+
+| 參數 | 說明 | tracer bullet 預設 |
+|---|---|---|
+| `query` | 關鍵字或搜尋式 | 必填 |
+| `sources` | 一或多個 search source adapter | `arxiv` |
+| `schedule` | cron expression + timezone | 必填 |
+| `max_results` | 每次執行最多取回數量 | 可設定 |
+| `destination` | 結果目的地；未設定時使用目前 Project | 選填，預設 Project |
+| `dedupe_key` | 去重策略 | arXiv ID → DOI → canonical URL |
+
+### 預設流程
+
+```text
+cron trigger
+  → 依 sources 執行搜尋
+  → normalize metadata
+  → 以 arXiv ID / DOI / canonical URL 去重
+  → 保存新的 result records 與檔案／來源連結
+  → 更新 run history、last_run、next_run
+```
+
+### 搜尋來源
+
+- **第一條 tracer bullet 以 arXiv 為主**：先驗證 metadata 搜尋、穩定 ID、去重、持久化與後續預覽鏈路
+- `sources` 必須是可插拔 adapter；已有的 web search / fetch tools 可作其他來源
+- 後續候選：Semantic Scholar、OpenAlex、一般 Web search；不是第一條 tracer bullet 的 blocking scope
+- 一次執行可選多來源，但各 provider 的 rate limit、錯誤與 provenance 必須分開記錄
+
+### 背景執行契約
+
+- 排程保存後，即使使用者關閉頁面或 session 結束也必須執行
+- 每次 run 保存狀態、開始／結束時間、來源、命中數、新增數、重複數與錯誤
+- 單一來源失敗不應抹除其他來源已取得的結果
+- 結果必須帶 provenance（來源 provider、原始 URL、取得時間、外部 ID）
+- 重跑不得重複建立相同資料；既有結果可直接取用，完整規則見下方「Pipeline outputs reuse」
+
+### Tracer bullet 驗收
+
+- [ ] 從 template 建立 Scheduled Search，不需從空白 DAG 開始
+- [ ] 設定 query、arXiv、cron、timezone 後可保存；destination 未設定時使用目前 Project
+- [ ] UI 關閉後，後端仍按排程執行
+- [ ] arXiv 結果正規化、去重並持久化
+- [ ] UI 可看到 last run、next run、執行狀態與新增結果
+- [ ] 重跑相同搜尋不產生 duplicate records
+- [ ] 結果可交給後續論文庫／viewer，而不需要重新搜尋
+
+## Pipeline outputs reuse
+
+原需求稱「共用資料集」，目前定義為：**Pipeline 的來源與結果可保存、發布並被後續研究重用**，不限定為表格型 dataset。
+
+### Output destination
+
+- `destination` 是選填配置；未設定時，sources 與 results 預設保存到目前 Project
+- Pipeline 執行完成後，使用者可手動將選定的 sources 或 results 加入 Workspace Wiki
+- Pipeline / template 可預先指定一個 Wiki，讓每次執行後的 sources / results 自動流入該 Wiki
+- 即使自動流入 Wiki，Project 仍保留該次 pipeline run 與結果紀錄；Wiki 是可重用的發布目的地，不取代 Project 執行紀錄
+
+### 內容區分與重用
+
+- **Source Markdown**：搜尋取得的原始來源或由原始檔轉換的內容
+- **Result Markdown**：Pipeline 綜整、分析或生成的研究結果
+- 加入 Wiki 後仍須保留 source / result 的區分，不能把模型產生的結論偽裝成原始來源
+- Normal Chat 不直接混入整個 Wiki context；需要 Wiki 內容時，由 orchestrator 呼叫 librarian subagent 查詢並帶回相關內容
+
 ## UI 需求
 
 - **視覺化 DAG editor**（拖放節點、連線、設定）
 - 節點 inspector（設定 prompt / skills / tools / code）
 - cron 管理介面（排程列表 + 下次執行時間）
+- template gallery / create flow（第一個 template：Scheduled Search）
 - 執行記錄（每個 node 的 input/output、耗時、成功/失敗）
 - pipeline 狀態（running / success / failed / paused）
 

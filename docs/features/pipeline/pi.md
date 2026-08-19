@@ -23,8 +23,24 @@
 
 可參考：pi-dynamic-workflows 的 journal resume 模式（long-running pipeline 的 checkpoint）。
 
+## Scheduled Search template（tracer bullet）
+
+對應 [spec.md](spec.md) 的第一個 built-in template。Track A 不另建 agent，直接組合既有搜尋工具與自建 scheduler：
+
+| Template 元件 | Track A 對應 |
+|---|---|
+| arXiv source（預設） | `hinsencamp/pi-research-agent`（Semantic Scholar + arXiv + OpenAlex）或 `@wienerberliner/pi-arxiv`；全文轉換可接 `pi-arxivist` |
+| 其他 Web sources | `pi-web-access` 的 `web_search` / `fetch_content` 與 provider fallback chain |
+| cron / background run | 自建 BullMQ 或 node-cron + 持久化 job registry；不可依賴前端 session |
+| normalize / dedupe | code node；優先鍵 arXiv ID → DOI → canonical URL |
+| persistence | workspace collection / 論文庫 artifact；保存 provenance 與 run ID |
+| status | workflow run history + last/next run；供 system-status 與 template UI 讀取 |
+
+Tracer bullet 先固定 `sources = [arxiv]`，但 WorkflowJSON 使用 source adapter array，後續加入其他 web search tools 不需改 schema。
+
 ## 自建 gap 清單
 
 1. Workflow engine 本體（上述四件）
 2. pipeline builder agent 的 tool schema（`pipeline_create` / `_connect` / `_set_cron` / `_expose_mcp` / `_run` / `_status`——spec 定義）
 3. DAG editor 前端（拖放 + inspector + 執行記錄）
+4. Scheduled Search template manifest、source adapter registry、normalize/dedupe node 與 arXiv e2e fixture

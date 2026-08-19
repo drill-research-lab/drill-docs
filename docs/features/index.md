@@ -25,6 +25,12 @@
 | [setting](setting/spec.md) | — | 設定（LLM/沙盒/審核/專案） | spec ✅ / [pi](setting/pi.md) ✅ / [dsh](setting/dsh.md) ✅ |
 | [system-status](system-status/spec.md) | — | 監控儀表板（backend/frontend/llm/network/storage） | spec ✅ / [pi](system-status/pi.md) ✅ / [dsh](system-status/dsh.md) ✅ |
 
+## 候選功能（尚未納入 10 個正式功能）
+
+| 功能 | Agent | 定位 | 狀態 |
+|---|---|---|---|
+| [translation](translation/spec.md) | — | file-in / translated-file-out；是否值得 built-in 待討論 | candidate spec ⚠️；尚無 pi/dsh 設計 |
+
 ## 功能間依賴（示意）
 
 ```
