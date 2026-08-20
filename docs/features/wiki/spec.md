@@ -8,8 +8,6 @@
 - 像 **NotebookLM + llm-wiki** 的知識庫
 - 使用者**上傳任意文件**，LLM 自動協助整理
 - 文件解析：常見文書格式 → Markdown（含 OCR 選配）
-- RAG：是候選方案（`RAG ?` 待定）
-
 ## Agent 設計
 
 ### OpenCode / oh-my-openagent 設計參考
